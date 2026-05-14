@@ -196,25 +196,40 @@
         </div>
     </footer>
 
-    <script>
-        /* --- 1. DATA INITIAL & STORAGE --- */
-        const defaultProducts = [
-            { id: 1, name: "Richen Royal Gold", price: 450000, category: "pria", disc: "10%", img: "https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=400" },
-            { id: 2, name: "Sweet Jasmine Luxe", price: 320000, category: "wanita", disc: "5%", img: "https://images.unsplash.com/photo-1583445013765-d1c20e4a5b52?w=400" },
-            { id: 3, name: "Midnight Musk", price: 550000, category: "unisex", disc: "", img: "https://images.unsplash.com/photo-1557170334-a7c3a4e2ef38?w=400" },
-            { id: 4, name: "Ocean Fresh", price: 280000, category: "pria", disc: "", img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" },
-            { id: 5, name: "Vanilla Dream", price: 300000, category: "wanita", disc: "15%", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=400" },
-            { id: 6, name: "Dark Amber", price: 600000, category: "unisex", disc: "20%", img: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400" },
-            { id: 7, name: "Citrus Bloom", price: 250000, category: "wanita", disc: "", img: "https://images.unsplash.com/photo-1615485242221-396568470505?w=400" },
-            { id: 8, name: "Woody Intense", price: 480000, category: "pria", disc: "10%", img: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=400" }
-        ];
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database-compat.js"></script>
 
-        let products = JSON.parse(localStorage.getItem('richen_products')) || defaultProducts;
+    <script>
+        /* --- 1. FIREBASE CONFIG & INITIALIZATION --- */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPhe6-bKRdrpe0X5BW2xzDR0MplE1hV-c",
+            authDomain: "richen-perfume.firebaseapp.com",
+            databaseURL: "https://richen-perfume-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "richen-perfume",
+            storageBucket: "richen-perfume.firebasestorage.app",
+            messagingSenderId: "724141266273",
+            appId: "1:724141266273:web:6808007b84619d2ca22120",
+            measurementId: "G-3KRY9KV1QX"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let products = [];
         let cart = [];
 
-        function saveToStorage() {
-            localStorage.setItem('richen_products', JSON.stringify(products));
-        }
+        // Ambil data Realtime dari Firebase
+        db.ref('products').on('value', (snapshot) => {
+            const data = snapshot.val();
+            products = [];
+            if (data) {
+                // Ubah objek Firebase jadi array agar filter/search tetap jalan
+                for (let id in data) {
+                    products.push({ id, ...data[id] });
+                }
+            }
+            renderProducts(products);
+        });
 
         /* --- 2. RENDER ENGINE --- */
         function renderProducts(data) {
@@ -227,9 +242,9 @@
                         <img src="${p.img || 'https://via.placeholder.com/400'}" class="product-img">
                         <div class="product-info">
                             <div class="product-name">${p.name}</div>
-                            <div class="product-price">Rp ${p.price.toLocaleString('id-ID')}</div>
+                            <div class="product-price">Rp ${parseInt(p.price).toLocaleString('id-ID')}</div>
                             <div class="action-btns">
-                                <button class="btn-cart" onclick="addToCart(${p.id})"><i class="fas fa-shopping-cart"></i></button>
+                                <button class="btn-cart" onclick="addToCart('${p.id}')"><i class="fas fa-shopping-cart"></i></button>
                                 <button class="btn-buy" onclick="buyNow('${p.name}')">Beli Sekarang</button>
                             </div>
                         </div>
@@ -278,7 +293,7 @@
                         <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
                         <div style="flex-grow:1">
                             <div style="font-size:14px; font-weight:600;">${item.name}</div>
-                            <div style="font-size:12px; color:var(--gold);">Rp ${item.price.toLocaleString()}</div>
+                            <div style="font-size:12px; color:var(--gold);">Rp ${parseInt(item.price).toLocaleString()}</div>
                         </div>
                         <input type="number" class="cart-qty" value="${item.qty}" min="1" onchange="changeQty(${index}, this.value)">
                         <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="removeItem(${index})"></i>
@@ -325,11 +340,11 @@
                 tbody.innerHTML += `
                     <tr>
                         <td>${p.name}</td>
-                        <td>Rp ${p.price.toLocaleString()}</td>
+                        <td>Rp ${parseInt(p.price).toLocaleString()}</td>
                         <td>${p.category}</td>
                         <td>
-                            <button class="btn-edit" onclick="startEdit(${p.id})">Edit</button>
-                            <button class="btn-delete" onclick="deleteProd(${p.id})">Hapus</button>
+                            <button class="btn-edit" onclick="startEdit('${p.id}')">Edit</button>
+                            <button class="btn-delete" onclick="deleteProd('${p.id}')">Hapus</button>
                         </td>
                     </tr>
                 `;
@@ -345,41 +360,32 @@
 
             if(!name || !price) return alert("Lengkapi Nama & Harga!");
 
-            const saveToData = (imageSrc) => {
+            const uploadToFirebase = (imageSrc) => {
+                const productData = {
+                    name: name,
+                    price: parseInt(price),
+                    category: document.getElementById('admCat').value,
+                    disc: document.getElementById('admDisc').value,
+                    img: imageSrc
+                };
+
                 if (editId === "-1") {
-                    const obj = {
-                        id: Date.now(),
-                        name: name,
-                        price: parseInt(price),
-                        category: document.getElementById('admCat').value,
-                        disc: document.getElementById('admDisc').value,
-                        img: imageSrc
-                    };
-                    products.unshift(obj);
+                    // Tambah baru
+                    db.ref('products').push(productData);
                 } else {
-                    const pIdx = products.findIndex(p => p.id == editId);
-                    if (pIdx !== -1) {
-                        products[pIdx].name = name;
-                        products[pIdx].price = parseInt(price);
-                        products[pIdx].category = document.getElementById('admCat').value;
-                        products[pIdx].disc = document.getElementById('admDisc').value;
-                        if (imageSrc && !imageSrc.includes('placeholder')) {
-                            products[pIdx].img = imageSrc;
-                        }
-                    }
+                    // Update yang sudah ada
+                    db.ref('products/' + editId).update(productData);
                 }
-                saveToStorage();
                 resetForm();
-                renderProducts(products);
-                alert("Sukses Memperbarui Toko!");
+                alert("Sukses Memperbarui Database!");
             };
 
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) { saveToData(e.target.result); };
+                reader.onload = function(e) { uploadToFirebase(e.target.result); };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
-                saveToData(linkInput || (editId !== "-1" ? products.find(p => p.id == editId).img : 'https://via.placeholder.com/400?text=No+Image'));
+                uploadToFirebase(linkInput || (editId !== "-1" ? products.find(p => p.id == editId).img : 'https://via.placeholder.com/400?text=No+Image'));
             }
         }
 
@@ -398,10 +404,8 @@
         }
 
         function deleteProd(id) {
-            if(confirm("Hapus produk ini?")) { 
-                products = products.filter(p => p.id != id);
-                saveToStorage();
-                renderProducts(products); 
+            if(confirm("Hapus produk ini dari database?")) { 
+                db.ref('products/' + id).remove();
             }
         }
 
@@ -452,7 +456,6 @@
         
         /* INIT */
         initDots();
-        renderProducts(products);
     </script>
 </body>
 </html>
