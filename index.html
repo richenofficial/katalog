@@ -14,12 +14,7 @@
 
         /* --- NAVIGATION --- */
         header { background: var(--black); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        /* FIX: Agar tidak terpotong di HP */
-        .header-main { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-        @media (max-width: 600px) {
-            .search-bar { order: 3; width: 100%; max-width: 100%; margin-top: 10px; }
-            .logo { font-size: 22px; }
-        }
+        .header-main { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
         .logo { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; }
         .search-bar { flex: 1; display: flex; background: var(--white); border-radius: 4px; overflow: hidden; max-width: 600px; }
         .search-bar input { flex: 1; border: none; padding: 10px 15px; outline: none; }
@@ -32,7 +27,7 @@
         .slider-container { width: 100%; height: 400px; position: relative; overflow: hidden; background: #000; }
         .slide { width: 100%; height: 100%; position: absolute; opacity: 0; transition: 0.8s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
         .slide.active { opacity: 1; }
-        .slide-content { text-align: center; color: var(--gold); text-shadow: 2px 2px 5px rgba(0,0,0,0.7); padding: 0 20px; }
+        .slide-content { text-align: center; color: var(--gold); text-shadow: 2px 2px 5px rgba(0,0,0,0.7); }
         .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: var(--gold); border: none; padding: 15px; cursor: pointer; z-index: 10; font-size: 20px; }
         .prev { left: 0; } .next { right: 0; }
         .dots-container { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
@@ -40,49 +35,55 @@
         .dot.active { background: var(--gold); width: 25px; border-radius: 10px; }
 
         /* --- CATEGORIES --- */
-        .categories { display: flex; justify-content: flex-start; gap: 10px; padding: 20px; background: #fff; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .categories { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #fff; overflow-x: auto; }
         .cat-btn { padding: 8px 20px; border: 1px solid var(--gold); border-radius: 20px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s; }
         .cat-btn.active, .cat-btn:hover { background: var(--gold); color: white; }
 
         /* --- PRODUCTS --- */
-        /* FIX: Responsif 2 kolom di HP */
-        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 5%; }
-        @media (max-width: 480px) {
-            .product-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 10px 3%; }
-            .product-img { height: 180px; }
-            .product-name { font-size: 13px; height: 35px; }
-            .product-price { font-size: 15px; }
-            .btn-buy { font-size: 12px; padding: 8px; }
-        }
+        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; padding: 20px 5%; }
         .product-card { background: #fff; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .product-img { width: 100%; height: 240px; object-fit: cover; }
-        .disc-badge { position: absolute; top: 10px; left: 10px; background: #e74c3c; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; z-index: 5; }
+        .disc-badge { position: absolute; top: 10px; left: 10px; background: #e74c3c; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
         .product-info { padding: 15px; flex-grow: 1; }
         .product-name { font-weight: 600; font-size: 16px; margin-bottom: 5px; height: 45px; overflow: hidden; }
         .product-price { color: var(--gold); font-weight: 700; font-size: 18px; margin-bottom: 15px; }
         .action-btns { display: flex; gap: 5px; }
         .btn-cart { flex: 1; background: #fff; border: 1px solid var(--black); padding: 10px; cursor: pointer; border-radius: 4px; }
         .btn-buy { flex: 2; background: var(--black); color: #fff; border: none; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .btn-buy:hover { background: var(--gold); }
 
         /* --- ADMIN PANEL --- */
         #admin-panel { display: none; background: #fff; margin: 30px 5%; padding: 25px; border: 2px solid var(--gold); border-radius: 10px; }
         .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .admin-form input, .admin-form select { padding: 12px; border: 1px solid #ccc; border-radius: 5px; width: 100%; }
-        /* FIX: Agar tabel admin tidak merusak layout HP */
-        .admin-table-container { width: 100%; overflow-x: auto; margin-top: 20px; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; }
-
-        /* --- FOOTER --- */
-        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 50px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; }
+        .admin-form input, .admin-form select { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn-save { background: var(--gold); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        .admin-table-container { overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f8f8f8; }
+        .btn-edit { background: #2ecc71; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        .btn-delete { background: #e74c3c; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
 
         /* --- CART SIDEBAR --- */
         #cart-modal { position: fixed; right: -400px; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
         #cart-modal.active { right: 0; }
-        @media (max-width: 400px) { #cart-modal { width: 100%; right: -100%; } }
+        .cart-item { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; align-items: center; }
+        .cart-qty { width: 50px; padding: 5px; text-align: center; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; }
+        .footer-grid p { color: #ccc; margin-bottom: 10px; cursor: pointer; font-size: 14px; }
+        .footer-grid p:hover { color: var(--gold); }
+        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            #cart-modal { width: 100%; right: -100%; }
+            .slider-container { height: 250px; }
+            .slide-content h2 { font-size: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -106,12 +107,14 @@
     <div class="slider-container">
         <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        
         <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=1200');">
             <div class="slide-content"><h2>Royal Scent Collection</h2><p>Elegansi dalam setiap tetesan aroma</p></div>
         </div>
         <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200');">
             <div class="slide-content"><h2>Limited Time Promo</h2><p>Dapatkan diskon hingga 30%</p></div>
         </div>
+
         <div class="dots-container" id="dotsArea"></div>
     </div>
 
@@ -127,7 +130,7 @@
     <div id="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 id="admHeader">Tambah Produk</h2>
-            <button onclick="closeAdmin()" style="color:red; cursor:pointer; background:none; border:none;">[Tutup]</button>
+            <button onclick="closeAdmin()" style="background:none; border:none; color:red; cursor:pointer;">[Tutup]</button>
         </div>
         <div class="admin-form">
             <input type="hidden" id="editIdx" value="-1">
@@ -139,14 +142,20 @@
                 <option value="unisex">Unisex</option>
             </select>
             <input type="text" id="admDisc" placeholder="Diskon (cth: 10%)">
-            <input type="file" id="admFile" accept="image/*">
-            <input type="text" id="admImg" placeholder="Atau Link Foto (Opsional)">
-            <button class="btn-save" id="btnSave" onclick="processProduct()" style="background:var(--gold); color:white; border:none; padding:12px; border-radius:5px; font-weight:bold; cursor:pointer;">Simpan Ke Toko</button>
+            
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label style="font-size: 12px; font-weight: bold;">Foto Produk:</label>
+                <input type="file" id="admFile" accept="image/*" style="border: none; padding: 0;">
+                <p style="font-size: 10px; color: #888;">*Atau masukkan link jika ada:</p>
+                <input type="text" id="admImg" placeholder="Link Foto (Opsional)">
+            </div>
+            
+            <button class="btn-save" id="btnSave" onclick="processProduct()">Simpan Ke Toko</button>
         </div>
         <div class="admin-table-container">
             <table>
                 <thead>
-                    <tr><th>Produk</th><th>Harga</th><th>Aksi</th></tr>
+                    <tr><th>Produk</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr>
                 </thead>
                 <tbody id="admTbody"></tbody>
             </table>
@@ -158,9 +167,9 @@
         <hr style="margin: 15px 0;">
         <div id="cartList" style="flex-grow: 1; overflow-y: auto;"></div>
         <div style="padding-top: 20px; border-top: 2px solid #eee;">
-            <h4>Total: <span id="cartTotal" style="color:var(--gold)">Rp 0</span></h4>
-            <button class="btn-buy" style="width:100%; margin-top:15px; padding: 15px;" onclick="checkoutWhatsApp()">Checkout WA</button>
-            <button class="btn-cart" style="width:100%; margin-top:10px;" onclick="toggleCart()">Kembali</button>
+            <h4>Total Bayar: <span id="cartTotal" style="color:var(--gold)">Rp 0</span></h4>
+            <button class="btn-buy" style="width:100%; margin-top:15px; padding: 15px;" onclick="checkoutWhatsApp()">Checkout ke WhatsApp</button>
+            <button class="btn-cart" style="width:100%; margin-top:10px;" onclick="toggleCart()">Kembali Belanja</button>
         </div>
     </div>
 
@@ -168,16 +177,22 @@
         <div class="footer-grid">
             <div>
                 <h4>RICHEN OFFICIAL</h4>
-                <p>Marketplace parfum modern dengan kurasi aroma terbaik dunia.</p>
+                <p>Marketplace parfum modern dengan kurasi aroma terbaik dunia. Memberikan kesan profesional dan elegan.</p>
                 <div class="social-icons">
                     <a href="https://www.instagram.com/richen_official?igsh=MmE3b3R6NGYyMGZ4" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@richen.indonesia?_r=1&_t=ZS-96Ke6N0RyYK" target="_blank"><i class="fab fa-tiktok"></i></a>
                     <a href="https://wa.me/6283814559667" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
+            <div>
+                <h4>Layanan</h4>
+                <p onclick="alert('Instagram: RICHEN OFFICIAL\nTiktok: richen.indonesia')">Akun Sosial Media</p>
+                <p onclick="alert('Cara Beli:\n1. Pilih Parfum\n2. Klik Beli Sekarang / Tambah Keranjang\n3. Selesaikan pembayaran via WA Admin')">Cara Pembelian</p>
+                <p onclick="alert('Pengiriman:\nKami mengirim ke seluruh Indonesia via eksepidisi.')">Pengiriman</p>
+            </div>
         </div>
         <div style="text-align:center; margin-top:40px; border-top:1px solid #333; padding-top:20px; font-size:12px; color:#777;">
-            &copy; 2026 RICHEN Perfume Marketplace.
+            &copy; 2026 RICHEN Perfume Marketplace. All Rights Reserved.
         </div>
     </footer>
 
@@ -185,6 +200,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database-compat.js"></script>
 
     <script>
+        /* --- 1. FIREBASE CONFIG & INITIALIZATION --- */
         const firebaseConfig = {
             apiKey: "AIzaSyBPhe6-bKRdrpe0X5BW2xzDR0MplE1hV-c",
             authDomain: "richen-perfume.firebaseapp.com",
@@ -202,15 +218,20 @@
         let products = [];
         let cart = [];
 
+        // Ambil data Realtime dari Firebase
         db.ref('products').on('value', (snapshot) => {
             const data = snapshot.val();
             products = [];
             if (data) {
-                for (let id in data) products.push({ id, ...data[id] });
+                // Ubah objek Firebase jadi array agar filter/search tetap jalan
+                for (let id in data) {
+                    products.push({ id, ...data[id] });
+                }
             }
             renderProducts(products);
         });
 
+        /* --- 2. RENDER ENGINE --- */
         function renderProducts(data) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = "";
@@ -224,7 +245,7 @@
                             <div class="product-price">Rp ${parseInt(p.price).toLocaleString('id-ID')}</div>
                             <div class="action-btns">
                                 <button class="btn-cart" onclick="addToCart('${p.id}')"><i class="fas fa-shopping-cart"></i></button>
-                                <button class="btn-buy" onclick="buyNow('${p.name}')">Beli</button>
+                                <button class="btn-buy" onclick="buyNow('${p.name}')">Beli Sekarang</button>
                             </div>
                         </div>
                     </div>
@@ -233,6 +254,7 @@
             renderAdminTable();
         }
 
+        /* --- 3. FILTER & SEARCH --- */
         function liveSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(query));
@@ -246,54 +268,86 @@
             else renderProducts(products.filter(p => p.category === cat));
         }
 
+        /* --- 4. CART LOGIC --- */
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
+
         function addToCart(id) {
             const p = products.find(i => i.id === id);
             const exists = cart.find(i => i.id === id);
             if(exists) exists.qty++;
             else cart.push({...p, qty: 1});
             updateCartUI();
+            alert("Berhasil ditambah ke keranjang!");
         }
 
         function updateCartUI() {
             const list = document.getElementById('cartList');
-            let total = 0, count = 0;
+            let total = 0;
+            let count = 0;
             list.innerHTML = "";
             cart.forEach((item, index) => {
                 total += item.price * item.qty;
                 count += item.qty;
-                list.innerHTML += `<div style="display:flex; gap:10px; margin-bottom:10px; font-size:14px;">
-                    <b>${item.name}</b> x ${item.qty} - Rp ${(item.price * item.qty).toLocaleString()}
-                </div>`;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+                        <div style="flex-grow:1">
+                            <div style="font-size:14px; font-weight:600;">${item.name}</div>
+                            <div style="font-size:12px; color:var(--gold);">Rp ${parseInt(item.price).toLocaleString()}</div>
+                        </div>
+                        <input type="number" class="cart-qty" value="${item.qty}" min="1" onchange="changeQty(${index}, this.value)">
+                        <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="removeItem(${index})"></i>
+                    </div>
+                `;
             });
             document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString('id-ID');
             document.getElementById('cartCount').innerText = count;
         }
 
+        function changeQty(idx, val) { cart[idx].qty = parseInt(val); updateCartUI(); }
+        function removeItem(idx) { cart.splice(idx, 1); updateCartUI(); }
+
         function buyNow(name) {
-            window.open(`https://wa.me/6283814559667?text=Halo RICHEN, saya ingin membeli: ${name}`);
+            window.open(`https://wa.me/6283814559667?text=Halo RICHEN, saya ingin membeli parfum: ${name}`);
         }
 
         function checkoutWhatsApp() {
+            if(cart.length === 0) return alert("Keranjang kosong!");
             let msg = "Halo RICHEN, saya ingin pesan:\n";
             cart.forEach(i => msg += `- ${i.name} (${i.qty}x)\n`);
             window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(msg)}`);
         }
 
-        function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
-
-        /* ADMIN LOGIC */
+        /* --- 5. ADMIN ENGINE --- */
         let taps = 0;
-        document.getElementById('logoAdmin').onclick = () => {
-            taps++; if(taps >= 5) { if(prompt("Pass:") === "richen123") document.getElementById('admin-panel').style.display="block"; taps=0; }
+        document.getElementById('logoAdmin').onclick = function() {
+            taps++;
+            if(taps >= 5) {
+                if(prompt("Password Admin:") === "richen123") {
+                    document.getElementById('admin-panel').style.display = "block";
+                    document.getElementById('admin-panel').scrollIntoView();
+                }
+                taps = 0;
+            }
         };
-        function closeAdmin() { document.getElementById('admin-panel').style.display="none"; }
+
+        function closeAdmin() { document.getElementById('admin-panel').style.display = "none"; }
 
         function renderAdminTable() {
             const tbody = document.getElementById('admTbody');
             tbody.innerHTML = "";
             products.forEach((p) => {
-                tbody.innerHTML += `<tr><td>${p.name}</td><td>Rp ${parseInt(p.price).toLocaleString()}</td>
-                <td><button onclick="deleteProd('${p.id}')" style="background:red; color:white; border:none; padding:5px; border-radius:3px;">Hapus</button></td></tr>`;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.name}</td>
+                        <td>Rp ${parseInt(p.price).toLocaleString()}</td>
+                        <td>${p.category}</td>
+                        <td>
+                            <button class="btn-edit" onclick="startEdit('${p.id}')">Edit</button>
+                            <button class="btn-delete" onclick="deleteProd('${p.id}')">Hapus</button>
+                        </td>
+                    </tr>
+                `;
             });
         }
 
@@ -302,36 +356,106 @@
             const price = document.getElementById('admPrice').value;
             const fileInput = document.getElementById('admFile');
             const linkInput = document.getElementById('admImg').value;
+            const editId = document.getElementById('editIdx').value;
 
-            if(!name || !price) return alert("Isi nama & harga!");
+            if(!name || !price) return alert("Lengkapi Nama & Harga!");
 
-            const save = (img) => {
-                db.ref('products').push({
-                    name, price, category: document.getElementById('admCat').value, disc: document.getElementById('admDisc').value, img
-                });
-                alert("Berhasil!");
+            const uploadToFirebase = (imageSrc) => {
+                const productData = {
+                    name: name,
+                    price: parseInt(price),
+                    category: document.getElementById('admCat').value,
+                    disc: document.getElementById('admDisc').value,
+                    img: imageSrc
+                };
+
+                if (editId === "-1") {
+                    // Tambah baru
+                    db.ref('products').push(productData);
+                } else {
+                    // Update yang sudah ada
+                    db.ref('products/' + editId).update(productData);
+                }
+                resetForm();
+                alert("Sukses Memperbarui Database!");
             };
 
-            if(fileInput.files[0]) {
+            if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
-                reader.onload = (e) => save(e.target.result);
+                reader.onload = function(e) { uploadToFirebase(e.target.result); };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
-                save(linkInput || 'https://via.placeholder.com/400');
+                uploadToFirebase(linkInput || (editId !== "-1" ? products.find(p => p.id == editId).img : 'https://via.placeholder.com/400?text=No+Image'));
             }
         }
 
-        function deleteProd(id) { if(confirm("Hapus?")) db.ref('products/'+id).remove(); }
+        function startEdit(id) {
+            const p = products.find(i => i.id == id);
+            if (!p) return;
+            document.getElementById('admName').value = p.name;
+            document.getElementById('admPrice').value = p.price;
+            document.getElementById('admCat').value = p.category;
+            document.getElementById('admDisc').value = p.disc;
+            document.getElementById('admImg').value = p.img;
+            document.getElementById('editIdx').value = p.id;
+            document.getElementById('btnSave').innerText = "Update Produk";
+            document.getElementById('admHeader').innerText = "Edit Produk: " + p.name;
+            window.scrollTo(0, document.getElementById('admin-panel').offsetTop);
+        }
 
-        /* SLIDER */
+        function deleteProd(id) {
+            if(confirm("Hapus produk ini dari database?")) { 
+                db.ref('products/' + id).remove();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('editIdx').value = "-1";
+            document.getElementById('btnSave').innerText = "Simpan Ke Toko";
+            document.getElementById('admName').value = "";
+            document.getElementById('admPrice').value = "";
+            document.getElementById('admDisc').value = "";
+            document.getElementById('admImg').value = "";
+            document.getElementById('admFile').value = "";
+            document.getElementById('admHeader').innerText = "Tambah Produk";
+        }
+
+        /* --- 6. SLIDER LOGIC --- */
         let sIdx = 0;
         const slides = document.querySelectorAll('.slide');
+        
+        function initDots() {
+            const dotsArea = document.getElementById('dotsArea');
+            dotsArea.innerHTML = "";
+            slides.forEach((_, i) => {
+                dotsArea.innerHTML += `<div class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></div>`;
+            });
+        }
+
         function moveSlide(n) {
             slides[sIdx].classList.remove('active');
             sIdx = (sIdx + n + slides.length) % slides.length;
             slides[sIdx].classList.add('active');
+            updateDots();
         }
-        setInterval(() => moveSlide(1), 5000);
+
+        function goToSlide(n) {
+            slides[sIdx].classList.remove('active');
+            sIdx = n;
+            slides[sIdx].classList.add('active');
+            updateDots();
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === sIdx);
+            });
+        }
+
+        setInterval(() => moveSlide(1), 6000);
+        
+        /* INIT */
+        initDots();
     </script>
 </body>
 </html>
