@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RICHEN - Exclusive Perfume Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --gold: #D4AF37; --black: #111111; --white: #ffffff; --bg: #f4f4f4; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: #333; overflow-x: hidden; }
+
+        /* --- NAVIGATION --- */
+        header { background: var(--black); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .header-main { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; }
+        .search-bar { flex: 1; display: flex; background: var(--white); border-radius: 4px; overflow: hidden; max-width: 600px; }
+        .search-bar input { flex: 1; border: none; padding: 10px 15px; outline: none; }
+        .search-bar button { background: var(--gold); border: none; padding: 0 20px; color: white; cursor: pointer; }
+        .header-icons { display: flex; gap: 20px; color: var(--white); font-size: 20px; }
+        .cart-icon { cursor: pointer; position: relative; }
+        .cart-count { position: absolute; top: -10px; right: -10px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
+
+        /* --- BANNER SLIDER --- */
+        .slider-container { width: 100%; height: 400px; position: relative; overflow: hidden; background: #000; }
+        .slide { width: 100%; height: 100%; position: absolute; opacity: 0; transition: 0.8s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
+        .slide.active { opacity: 1; }
+        .slide-content { text-align: center; color: var(--gold); text-shadow: 2px 2px 5px rgba(0,0,0,0.7); }
+        .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: var(--gold); border: none; padding: 15px; cursor: pointer; z-index: 10; font-size: 20px; }
+        .prev { left: 0; } .next { right: 0; }
+        .dots-container { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+        .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--gold); width: 25px; border-radius: 10px; }
+
+        /* --- CATEGORIES --- */
+        .categories { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #fff; overflow-x: auto; }
+        .cat-btn { padding: 8px 20px; border: 1px solid var(--gold); border-radius: 20px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s; }
+        .cat-btn.active, .cat-btn:hover { background: var(--gold); color: white; }
+
+        /* --- PRODUCTS --- */
+        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; padding: 20px 5%; }
+        .product-card { background: #fff; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .product-img { width: 100%; height: 240px; object-fit: cover; }
+        .disc-badge { position: absolute; top: 10px; left: 10px; background: #e74c3c; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .product-info { padding: 15px; flex-grow: 1; }
+        .product-name { font-weight: 600; font-size: 16px; margin-bottom: 5px; height: 45px; overflow: hidden; }
+        .product-price { color: var(--gold); font-weight: 700; font-size: 18px; margin-bottom: 15px; }
+        .action-btns { display: flex; gap: 5px; }
+        .btn-cart { flex: 1; background: #fff; border: 1px solid var(--black); padding: 10px; cursor: pointer; border-radius: 4px; }
+        .btn-buy { flex: 2; background: var(--black); color: #fff; border: none; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .btn-buy:hover { background: var(--gold); }
+
+        /* --- ADMIN PANEL --- */
+        #admin-panel { display: none; background: #fff; margin: 30px 5%; padding: 25px; border: 2px solid var(--gold); border-radius: 10px; }
+        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 25px; }
+        .admin-form input, .admin-form select { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn-save { background: var(--gold); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        .admin-table-container { overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f8f8f8; }
+        .btn-edit { background: #2ecc71; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        .btn-delete { background: #e74c3c; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+
+        /* --- CART SIDEBAR --- */
+        #cart-modal { position: fixed; right: -400px; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
+        #cart-modal.active { right: 0; }
+        .cart-item { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; align-items: center; }
+        .cart-qty { width: 50px; padding: 5px; text-align: center; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; }
+        .footer-grid p { color: #ccc; margin-bottom: 10px; cursor: pointer; font-size: 14px; }
+        .footer-grid p:hover { color: var(--gold); }
+        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            #cart-modal { width: 100%; right: -100%; }
+            .slider-container { height: 250px; }
+            .slide-content h2 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-main">
+            <div class="logo" id="logoAdmin">RICHEN</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cari parfum favorit..." onkeyup="liveSearch()">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="header-icons">
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="slider-container">
+        <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        
+        <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=1200');">
+            <div class="slide-content"><h2>Royal Scent Collection</h2><p>Elegansi dalam setiap tetesan aroma</p></div>
+        </div>
+        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200');">
+            <div class="slide-content"><h2>Limited Time Promo</h2><p>Dapatkan diskon hingga 30%</p></div>
+        </div>
+
+        <div class="dots-container" id="dotsArea"></div>
+    </div>
+
+    <div class="categories">
+        <div class="cat-btn active" onclick="filterByCat('all', this)">Semua Produk</div>
+        <div class="cat-btn" onclick="filterByCat('pria', this)">Parfum Pria</div>
+        <div class="cat-btn" onclick="filterByCat('wanita', this)">Parfum Wanita</div>
+        <div class="cat-btn" onclick="filterByCat('unisex', this)">Unisex</div>
+    </div>
+
+    <div class="product-container" id="productGrid"></div>
+
+    <div id="admin-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 id="admHeader">Tambah Produk</h2>
+            <button onclick="closeAdmin()" style="background:none; border:none; color:red; cursor:pointer;">[Tutup]</button>
+        </div>
+        <div class="admin-form">
+            <input type="hidden" id="editIdx" value="-1">
+            <input type="text" id="admName" placeholder="Nama Parfum">
+            <input type="number" id="admPrice" placeholder="Harga">
+            <select id="admCat">
+                <option value="pria">Pria</option>
+                <option value="wanita">Wanita</option>
+                <option value="unisex">Unisex</option>
+            </select>
+            <input type="text" id="admDisc" placeholder="Diskon (cth: 10%)">
+            
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label style="font-size: 12px; font-weight: bold;">Foto Produk:</label>
+                <input type="file" id="admFile" accept="image/*" style="border: none; padding: 0;">
+                <p style="font-size: 10px; color: #888;">*Atau masukkan link jika ada:</p>
+                <input type="text" id="admImg" placeholder="Link Foto (Opsional)">
+            </div>
+            
+            <button class="btn-save" id="btnSave" onclick="processProduct()">Simpan Ke Toko</button>
+        </div>
+        <div class="admin-table-container">
+            <table>
+                <thead>
+                    <tr><th>Produk</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="admTbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="cart-modal">
+        <h3>Keranjang Belanja</h3>
+        <hr style="margin: 15px 0;">
+        <div id="cartList" style="flex-grow: 1; overflow-y: auto;"></div>
+        <div style="padding-top: 20px; border-top: 2px solid #eee;">
+            <h4>Total Bayar: <span id="cartTotal" style="color:var(--gold)">Rp 0</span></h4>
+            <button class="btn-buy" style="width:100%; margin-top:15px; padding: 15px;" onclick="checkoutWhatsApp()">Checkout ke WhatsApp</button>
+            <button class="btn-cart" style="width:100%; margin-top:10px;" onclick="toggleCart()">Kembali Belanja</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h4>RICHEN OFFICIAL</h4>
+                <p>Marketplace parfum modern dengan kurasi aroma terbaik dunia. Memberikan kesan profesional dan elegan.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/richen_official?igsh=MmE3b3R6NGYyMGZ4" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@richen.indonesia?_r=1&_t=ZS-96Ke6N0RyYK" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/6283814559667" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Layanan</h4>
+                <p onclick="alert('Instagram: RICHEN OFFICIAL\nTiktok: richen.indonesia')">Akun Sosial Media</p>
+                <p onclick="alert('Cara Beli:\n1. Pilih Parfum\n2. Klik Beli Sekarang / Tambah Keranjang\n3. Selesaikan pembayaran via WA Admin')">Cara Pembelian</p>
+                <p onclick="alert('Pengiriman:\nKami mengirim ke seluruh Indonesia via eksepidisi.')">Pengiriman</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px; border-top:1px solid #333; padding-top:20px; font-size:12px; color:#777;">
+            &copy; 2026 RICHEN Perfume Marketplace. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        /* --- 1. DATA INITIAL & STORAGE --- */
+        const defaultProducts = [
+            { id: 1, name: "Richen Royal Gold", price: 450000, category: "pria", disc: "10%", img: "https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=400" },
+            { id: 2, name: "Sweet Jasmine Luxe", price: 320000, category: "wanita", disc: "5%", img: "https://images.unsplash.com/photo-1583445013765-d1c20e4a5b52?w=400" },
+            { id: 3, name: "Midnight Musk", price: 550000, category: "unisex", disc: "", img: "https://images.unsplash.com/photo-1557170334-a7c3a4e2ef38?w=400" },
+            { id: 4, name: "Ocean Fresh", price: 280000, category: "pria", disc: "", img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" },
+            { id: 5, name: "Vanilla Dream", price: 300000, category: "wanita", disc: "15%", img: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=400" },
+            { id: 6, name: "Dark Amber", price: 600000, category: "unisex", disc: "20%", img: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400" },
+            { id: 7, name: "Citrus Bloom", price: 250000, category: "wanita", disc: "", img: "https://images.unsplash.com/photo-1615485242221-396568470505?w=400" },
+            { id: 8, name: "Woody Intense", price: 480000, category: "pria", disc: "10%", img: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=400" }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('richen_products')) || defaultProducts;
+        let cart = [];
+
+        function saveToStorage() {
+            localStorage.setItem('richen_products', JSON.stringify(products));
+        }
+
+        /* --- 2. RENDER ENGINE --- */
+        function renderProducts(data) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = "";
+            data.forEach((p) => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        ${p.disc ? `<div class="disc-badge">${p.disc} OFF</div>` : ''}
+                        <img src="${p.img || 'https://via.placeholder.com/400'}" class="product-img">
+                        <div class="product-info">
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-price">Rp ${p.price.toLocaleString('id-ID')}</div>
+                            <div class="action-btns">
+                                <button class="btn-cart" onclick="addToCart(${p.id})"><i class="fas fa-shopping-cart"></i></button>
+                                <button class="btn-buy" onclick="buyNow('${p.name}')">Beli Sekarang</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            renderAdminTable();
+        }
+
+        /* --- 3. FILTER & SEARCH --- */
+        function liveSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+            renderProducts(filtered);
+        }
+
+        function filterByCat(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if(cat === 'all') renderProducts(products);
+            else renderProducts(products.filter(p => p.category === cat));
+        }
+
+        /* --- 4. CART LOGIC --- */
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
+
+        function addToCart(id) {
+            const p = products.find(i => i.id === id);
+            const exists = cart.find(i => i.id === id);
+            if(exists) exists.qty++;
+            else cart.push({...p, qty: 1});
+            updateCartUI();
+            alert("Berhasil ditambah ke keranjang!");
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartList');
+            let total = 0;
+            let count = 0;
+            list.innerHTML = "";
+            cart.forEach((item, index) => {
+                total += item.price * item.qty;
+                count += item.qty;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+                        <div style="flex-grow:1">
+                            <div style="font-size:14px; font-weight:600;">${item.name}</div>
+                            <div style="font-size:12px; color:var(--gold);">Rp ${item.price.toLocaleString()}</div>
+                        </div>
+                        <input type="number" class="cart-qty" value="${item.qty}" min="1" onchange="changeQty(${index}, this.value)">
+                        <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="removeItem(${index})"></i>
+                    </div>
+                `;
+            });
+            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString('id-ID');
+            document.getElementById('cartCount').innerText = count;
+        }
+
+        function changeQty(idx, val) { cart[idx].qty = parseInt(val); updateCartUI(); }
+        function removeItem(idx) { cart.splice(idx, 1); updateCartUI(); }
+
+        function buyNow(name) {
+            window.open(`https://wa.me/6283814559667?text=Halo RICHEN, saya ingin membeli parfum: ${name}`);
+        }
+
+        function checkoutWhatsApp() {
+            if(cart.length === 0) return alert("Keranjang kosong!");
+            let msg = "Halo RICHEN, saya ingin pesan:\n";
+            cart.forEach(i => msg += `- ${i.name} (${i.qty}x)\n`);
+            window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(msg)}`);
+        }
+
+        /* --- 5. ADMIN ENGINE --- */
+        let taps = 0;
+        document.getElementById('logoAdmin').onclick = function() {
+            taps++;
+            if(taps >= 5) {
+                if(prompt("Password Admin:") === "richen123") {
+                    document.getElementById('admin-panel').style.display = "block";
+                    document.getElementById('admin-panel').scrollIntoView();
+                }
+                taps = 0;
+            }
+        };
+
+        function closeAdmin() { document.getElementById('admin-panel').style.display = "none"; }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admTbody');
+            tbody.innerHTML = "";
+            products.forEach((p) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.name}</td>
+                        <td>Rp ${p.price.toLocaleString()}</td>
+                        <td>${p.category}</td>
+                        <td>
+                            <button class="btn-edit" onclick="startEdit(${p.id})">Edit</button>
+                            <button class="btn-delete" onclick="deleteProd(${p.id})">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function processProduct() {
+            const name = document.getElementById('admName').value;
+            const price = document.getElementById('admPrice').value;
+            const fileInput = document.getElementById('admFile');
+            const linkInput = document.getElementById('admImg').value;
+            const editId = document.getElementById('editIdx').value;
+
+            if(!name || !price) return alert("Lengkapi Nama & Harga!");
+
+            const saveToData = (imageSrc) => {
+                if (editId === "-1") {
+                    const obj = {
+                        id: Date.now(),
+                        name: name,
+                        price: parseInt(price),
+                        category: document.getElementById('admCat').value,
+                        disc: document.getElementById('admDisc').value,
+                        img: imageSrc
+                    };
+                    products.unshift(obj);
+                } else {
+                    const pIdx = products.findIndex(p => p.id == editId);
+                    if (pIdx !== -1) {
+                        products[pIdx].name = name;
+                        products[pIdx].price = parseInt(price);
+                        products[pIdx].category = document.getElementById('admCat').value;
+                        products[pIdx].disc = document.getElementById('admDisc').value;
+                        if (imageSrc && !imageSrc.includes('placeholder')) {
+                            products[pIdx].img = imageSrc;
+                        }
+                    }
+                }
+                saveToStorage();
+                resetForm();
+                renderProducts(products);
+                alert("Sukses Memperbarui Toko!");
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { saveToData(e.target.result); };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveToData(linkInput || (editId !== "-1" ? products.find(p => p.id == editId).img : 'https://via.placeholder.com/400?text=No+Image'));
+            }
+        }
+
+        function startEdit(id) {
+            const p = products.find(i => i.id == id);
+            if (!p) return;
+            document.getElementById('admName').value = p.name;
+            document.getElementById('admPrice').value = p.price;
+            document.getElementById('admCat').value = p.category;
+            document.getElementById('admDisc').value = p.disc;
+            document.getElementById('admImg').value = p.img;
+            document.getElementById('editIdx').value = p.id;
+            document.getElementById('btnSave').innerText = "Update Produk";
+            document.getElementById('admHeader').innerText = "Edit Produk: " + p.name;
+            window.scrollTo(0, document.getElementById('admin-panel').offsetTop);
+        }
+
+        function deleteProd(id) {
+            if(confirm("Hapus produk ini?")) { 
+                products = products.filter(p => p.id != id);
+                saveToStorage();
+                renderProducts(products); 
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('editIdx').value = "-1";
+            document.getElementById('btnSave').innerText = "Simpan Ke Toko";
+            document.getElementById('admName').value = "";
+            document.getElementById('admPrice').value = "";
+            document.getElementById('admDisc').value = "";
+            document.getElementById('admImg').value = "";
+            document.getElementById('admFile').value = "";
+            document.getElementById('admHeader').innerText = "Tambah Produk";
+        }
+
+        /* --- 6. SLIDER LOGIC --- */
+        let sIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function initDots() {
+            const dotsArea = document.getElementById('dotsArea');
+            dotsArea.innerHTML = "";
+            slides.forEach((_, i) => {
+                dotsArea.innerHTML += `<div class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></div>`;
+            });
+        }
+
+        function moveSlide(n) {
+            slides[sIdx].classList.remove('active');
+            sIdx = (sIdx + n + slides.length) % slides.length;
+            slides[sIdx].classList.add('active');
+            updateDots();
+        }
+
+        function goToSlide(n) {
+            slides[sIdx].classList.remove('active');
+            sIdx = n;
+            slides[sIdx].classList.add('active');
+            updateDots();
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === sIdx);
+            });
+        }
+
+        setInterval(() => moveSlide(1), 6000);
+        
+        /* INIT */
+        initDots();
+        renderProducts(products);
+    </script>
+</body>
+</html>
