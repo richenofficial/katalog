@@ -49,7 +49,6 @@
 
         .logo { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; }
         
-        /* Menu Navigasi */
         .nav-menu { 
             display: flex; 
             gap: 15px; 
@@ -80,7 +79,6 @@
             background: var(--gold);
         }
 
-        /* Search & Cart Row */
         .header-actions-row {
             display: flex;
             align-items: center;
@@ -104,7 +102,7 @@
         .cart-icon { cursor: pointer; position: relative; padding: 5px; }
         .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
 
-        /* --- TOMBOL BACK / KEMBALI KE HOME --- */
+        /* --- TOMBOL BACK --- */
         .back-to-home-container {
             padding: 20px 5% 0;
             display: flex;
@@ -124,12 +122,7 @@
             border: none;
             padding: 5px 0;
         }
-        .btn-back-home:hover {
-            color: var(--gold);
-        }
-        .btn-back-home i {
-            font-size: 16px;
-        }
+        .btn-back-home:hover { color: var(--gold); }
 
         /* --- PAGES SYSTEM --- */
         .page-section { display: none; }
@@ -146,18 +139,65 @@
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
         .dot.active { background: var(--gold); width: 25px; border-radius: 10px; }
 
-        /* --- HIGHLIGHT KATEGORI GRID --- */
+        /* --- VISUAL INTERACTIVE GRID KATEGORI SANTRI --- */
         .categories-grid-container { padding: 40px 5% 30px; }
         .categories-title { text-align: center; font-weight: 700; margin-bottom: 25px; letter-spacing: 1px; font-size: 22px; color: var(--black); }
         .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         @media (min-width: 769px) { .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
-        .cat-grid-card { background: var(--white); border: 1px solid #eee; border-bottom: 3px solid #eee; border-radius: 10px; padding: 25px 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .cat-grid-card i { font-size: 26px; color: var(--black); transition: all 0.3s ease; }
-        .cat-grid-card span { font-weight: 600; font-size: 14px; color: #333; letter-spacing: 0.5px; }
-        .cat-grid-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-bottom-color: var(--gold); }
-        .cat-grid-card:hover i { color: var(--gold); }
-        .cat-grid-card.active { background: var(--white); border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15); }
-        .cat-grid-card.active i { color: var(--gold); }
+        .cat-grid-card { 
+            background: var(--white); 
+            border: 1px solid #eee; 
+            border-bottom: 3px solid #eee; 
+            border-radius: 12px; 
+            padding: 20px 15px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
+        }
+        
+        /* Wadah Animasi Karakter (Memastikan semua serentak) */
+        .cat-avatar-container {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .cat-avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .cat-grid-card span { 
+            font-weight: 600; 
+            font-size: 14px; 
+            color: #333; 
+            letter-spacing: 0.5px; 
+        }
+        
+        /* Efek Hover & Bayangan Interaktif */
+        .cat-grid-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+            border-bottom-color: var(--gold); 
+        }
+        .cat-grid-card:hover .cat-avatar-container {
+            transform: scale(1.08);
+        }
+        .cat-grid-card.active { 
+            background: var(--white); 
+            border: 1px solid var(--gold); 
+            border-bottom: 3px solid var(--gold); 
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15); 
+        }
 
         /* --- PRODUCTS PAGE --- */
         .product-page-header { padding: 15px 5% 10px; text-align: center; }
@@ -192,24 +232,19 @@
         #admin-panel { display: none; background: #fff; margin: 30px 5%; padding: 25px; border: 2px solid var(--gold); border-radius: 10px; }
         .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .admin-form input, .admin-form select { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
-        .admin-table-container { width: 100%; overflow-x: auto; margin-top: 20px; -webkit-overflow-scrolling: touch; }
+        .admin-table-container { width: 100%; overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 550px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .btn-edit { background: #2ecc71; color: #fff; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; margin-right: 5px; }
-        .btn-delete { background: #e74c3c; color: #fff; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; }
 
         /* --- CART SIDEBAR --- */
         #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
         #cart-modal.active { right: 0; }
-        @media (max-width: 400px) { #cart-modal { width: 100%; } }
 
         /* --- FOOTER --- */
         footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 60px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; font-weight: 600; letter-spacing: 0.5px; }
-        .footer-grid p { color: #ccc; margin-bottom: 10px; cursor: pointer; font-size: 14px; }
-        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; transition: opacity 0.2s; }
-        .social-icons a:hover { opacity: 0.8; }
+        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; font-weight: 600; }
+        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; }
     </style>
 </head>
 <body>
@@ -218,14 +253,12 @@
         <div class="header-main">
             <div class="header-top-row">
                 <div class="logo" id="logoAdmin">RICHEN</div>
-                
                 <nav class="nav-menu">
                     <span class="nav-link active-page" onclick="switchPage('home', this)">Home</span>
                     <span class="nav-link" onclick="switchPage('produk', this)">Produk</span>
                     <span class="nav-link" onclick="switchPage('tentang', this)">Tentang Kami</span>
                 </nav>
             </div>
-
             <div class="header-actions-row">
                 <div class="search-bar">
                     <input type="text" id="searchInput" placeholder="Cari parfum favorit..." onkeyup="liveSearch()">
@@ -246,42 +279,45 @@
             <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
             <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
             
-            <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner5.jpg');"></div>
+            <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');"></div>
             <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');"></div>
 
             <div class="dots-container" id="dotsArea"></div>
         </div>
 
         <div class="categories-grid-container">
-            <div class="categories-title">Jelajahi Koleksi Aroma</div>
+            <div class="categories-title">Jelajahi Koleksi Khazanah Aroma</div>
             <div class="categories-grid">
                 <div class="cat-grid-card" onclick="selectCategoryAndRedirect('all')">
-                    <i class="fas fa-border-all"></i>
+                    <div class="cat-avatar-container">
+                        <img src="https://i.ibb.co.com/Y7Zvywdn/df7788a8-7902-4677-9194-9aede8eb9d88.png" alt="Semua Produk">
+                    </div>
                     <span>Semua Produk</span>
                 </div>
                 <div class="cat-grid-card" onclick="selectCategoryAndRedirect('pria')">
-                    <i class="fas fa-mars"></i>
+                    <div class="cat-avatar-container">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlta0so0OHIF24-9LDYOEi9Nppg5_z_9sgA&s" alt="Santri Pria">
+                    </div>
                     <span>Parfum Pria</span>
                 </div>
                 <div class="cat-grid-card" onclick="selectCategoryAndRedirect('wanita')">
-                    <i class="fas fa-venus"></i>
+                    <div class="cat-avatar-container">
+                        <img src="https://i.ibb.co.com/HZMHfxD/27050562-f1e1-4509-afb7-710be9ca045b.png" alt="Santriwati">
+                    </div>
                     <span>Parfum Wanita</span>
                 </div>
                 <div class="cat-grid-card" onclick="selectCategoryAndRedirect('unisex')">
-                    <i class="fas fa-transgender-alt"></i>
-                    <span>Unisex</span>
+                    <div class="cat-avatar-container">
+                        <img src="https://i.ibb.co.com/1thXs1g2/28cbd493-d93e-4169-b754-912c6b448a3c.png" alt="Santri Unisex">
+                    </div>
+                    <span>Parfum Gabungan</span>
                 </div>
             </div>
         </div>
     </main>
 
     <main id="page-produk" class="page-section">
-        <div class="back-to-home-container">
-            <button class="btn-back-home" onclick="switchPage('home')">
-                <i class="fas fa-arrow-left"></i> Kembali ke Home
-            </button>
-        </div>
-        
+        <div class="back-to-home-container"><button class="btn-back-home" onclick="switchPage('home')"><i class="fas fa-arrow-left"></i> Kembali ke Home</button></div>
         <div class="product-page-header">
             <h2 id="productDisplayTitle">Katalog Produk</h2>
             <p style="color: #666; font-size: 14px;">Temukan karakteristik aroma exclusive kemewahan Anda</p>
@@ -290,25 +326,15 @@
     </main>
 
     <main id="page-tentang" class="page-section">
-        <div class="back-to-home-container">
-            <button class="btn-back-home" onclick="switchPage('home')">
-                <i class="fas fa-arrow-left"></i> Kembali ke Home
-            </button>
-        </div>
-
+        <div class="back-to-home-container"><button class="btn-back-home" onclick="switchPage('home')"><i class="fas fa-arrow-left"></i> Kembali ke Home</button></div>
         <div class="about-page-container">
-            <div class="about-header">
-                <h2>Khidmah & Khazanah RICHEN</h2>
-            </div>
-            
-            <div class="about-media">
-                <img src="https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg" alt="Richen Official Gallery">
-            </div>
-
+            <div class="about-header"><h2>Khidmah & Khazanah RICHEN</h2></div>
+            <div class="about-media"><img src="https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg" alt="Richen Official Gallery"></div>
             <div class="about-text-block">
-                <p><strong>Bismillahirrohmanirrohim, Dari Balik Pesantren untuk Indonesia.</strong></p>
-                <p>RICHEN lahir dari rahim ketekunan, kesederhanaan, dan cita-cita luhur seorang santri. Terinspirasi dari hadits Rasulullah SAW mengenai kecintaan beliau terhadap wewangian, kami mentadabburi nilai tersebut ke dalam bentuk ikhtiar nyata: meracik dan menghadirkan produk parfum premium dengan kualitas khazanah global eksklusif.</p>
+                <p><strong>Bismillahirrohmanirrohim, Dari Bilik Pesantren untuk Indonesia.</strong></p>
+                <p>RICHEN lahir dari rahim ketekunan, kesederhanaan, dan cita-cita luhur para santri. Terinspirasi dari hadits Rasulullah SAW mengenai kecintaan beliau terhadap wewangian, kami mentadabburi nilai tersebut ke dalam bentuk ikhtiar nyata: meracik dan menghadirkan produk parfum premium dengan kualitas khazanah global eksklusif.</p>
                 <p>Bagi kami, memakai wewangian bukan sekadar penunjang penampilan lahiriah, melainkan bagian dari sunnah, perwujudan kebersihan hati, menjaga muruah (kehormatan diri), serta menebar kemaslahatan aroma yang menenangkan bagi sesama di setiap aktivitas dan ibadah Anda.</p>
+                <p>Setiap botol parfum RICHEN diracik penuh ketelitian (tasamuh) menggunakan bahan baku pilihan bersertifikat guna menghasilkan ketahanan aroma maskulin, feminin elegan, maupun varian universal (unisex) yang tahan lama sepanjang hari.</p>
                 <p>Melalui marketplace digital ini, kami berkomitmen menjalankan muamalah yang jujur, tepercaya, bersih, dan modern demi meraih keberkahan serta kepuasan sejati bagi seluruh pelanggan setia RICHEN di seantero nusantara. Maturnuwun, sugeng belanja.</p>
             </div>
         </div>
@@ -323,22 +349,13 @@
             <input type="hidden" id="editIdx" value="-1">
             <input type="text" id="admName" placeholder="Nama Parfum">
             <input type="number" id="admPrice" placeholder="Harga">
-            <select id="admCat">
-                <option value="pria">Pria</option>
-                <option value="wanita">Wanita</option>
-                <option value="unisex">Unisex</option>
-            </select>
+            <select id="admCat"><option value="pria">Pria</option><option value="wanita">Wanita</option><option value="unisex">Unisex</option></select>
             <input type="text" id="admDisc" placeholder="Diskon (cth: 10%)">
             <input type="file" id="admFile" accept="image/*">
             <input type="text" id="admImg" placeholder="Link Foto (Opsional)">
             <button class="btn-save" id="btnSave" onclick="processProduct()" style="background:var(--gold); color:white; border:none; padding:12px; border-radius:5px; font-weight:bold; cursor:pointer;">Simpan Ke Toko</button>
         </div>
-        <div class="admin-table-container">
-            <table>
-                <thead><tr><th>Produk</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr></thead>
-                <tbody id="admTbody"></tbody>
-            </table>
-        </div>
+        <div class="admin-table-container"><table><thead><tr><th>Produk</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr></thead><tbody id="admTbody"></tbody></table></div>
     </div>
 
     <div id="cart-modal">
@@ -395,34 +412,21 @@
         let products = [], cart = [];
         let currentFilterCategory = 'all';
 
-        // NAVIGASI HALAMAN SPA
         function switchPage(pageId, element) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active-section');
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active-page');
-            });
-            
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active-section'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-page'));
             const targetSection = document.getElementById('page-' + pageId);
-            if (targetSection) {
-                targetSection.classList.add('active-section');
-            }
-            
-            if(element) {
-                element.classList.add('active-page');
-            } else {
+            if (targetSection) targetSection.classList.add('active-section');
+            if(element) element.classList.add('active-page');
+            else {
                 document.querySelectorAll('.nav-link').forEach(link => {
                     let text = link.innerText.toLowerCase();
-                    if((pageId === 'home' && text === 'home') || (pageId === 'produk' && text === 'produk') || (pageId === 'tentang' && text === 'tentang kami')) {
-                        link.classList.add('active-page');
-                    }
+                    if((pageId === 'home' && text === 'home') || (pageId === 'produk' && text === 'produk') || (pageId === 'tentang' && text === 'tentang kami')) link.classList.add('active-page');
                 });
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // REDIRECT KATEGORI DARI HOME KE HALAMAN PRODUK
         function selectCategoryAndRedirect(category) {
             currentFilterCategory = category;
             applyProductFilter();
@@ -431,27 +435,20 @@
 
         function applyProductFilter() {
             let filtered = products;
-            if (currentFilterCategory !== 'all') {
-                filtered = products.filter(p => p.category === currentFilterCategory);
-            }
+            if (currentFilterCategory !== 'all') filtered = products.filter(p => p.category === currentFilterCategory);
             const titles = { 'all': 'Katalog Semua Produk', 'pria': 'Koleksi Parfum Pria', 'wanita': 'Koleksi Parfum Wanita', 'unisex': 'Koleksi Varian Unisex' };
             const titleElem = document.getElementById('productDisplayTitle');
-            if (titleElem) {
-                titleElem.innerText = titles[currentFilterCategory] || 'Katalog Produk';
-            }
+            if (titleElem) titleElem.innerText = titles[currentFilterCategory] || 'Katalog Produk';
             renderProducts(filtered);
         }
 
         db.ref('products').on('value', (snapshot) => {
             const data = snapshot.val();
             products = [];
-            if (data) {
-                for (let id in data) products.push({ id, ...data[id] });
-            }
+            if (data) for (let id in data) products.push({ id, ...data[id] });
             applyProductFilter();
-        }, (error) => { console.error(error); });
+        });
 
-        // MENAMPILKAN PRODUK (Fitur Lazy Loading Telah Dihapus Sepenuhnya)
         function renderProducts(data) {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -463,7 +460,7 @@
                         <div class="product-name">${p.name}</div>
                         <div class="product-price">Rp ${parseInt(p.price).toLocaleString('id-ID')}</div>
                         <div class="action-btns">
-                            <button class="btn-cart" onclick="addToCart('${p.id}')" aria-label="Tambah Keranjang"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="btn-cart" onclick="addToCart('${p.id}')"><i class="fas fa-shopping-cart"></i></button>
                             <button class="btn-buy" onclick="buyNow('${p.name}')">Beli</button>
                         </div>
                     </div>
@@ -474,9 +471,7 @@
 
         function liveSearch() {
             const activeSec = document.querySelector('.page-section.active-section');
-            if(activeSec && activeSec.id !== 'page-produk') {
-                switchPage('produk');
-            }
+            if(activeSec && activeSec.id !== 'page-produk') switchPage('produk');
             const q = document.getElementById('searchInput').value.toLowerCase();
             renderProducts(products.filter(p => p.name.toLowerCase().includes(q)));
         }
@@ -507,36 +502,20 @@
         function removeItem(i) { cart.splice(i, 1); updateCartUI(); }
         function buyNow(n) { window.open(`https://wa.me/6283814559667?text=Saya ingin beli: ${n}`); }
         function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
-        
         function checkoutWhatsApp() {
             let m = "Halo RICHEN, saya ingin pesan:\n";
             cart.forEach(i => m += `- ${i.name} (${i.qty}x)\n`);
             window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(m)}`);
         }
 
-        /* --- ADMIN PANEL SYSTEM --- */
         let taps = 0;
-        document.getElementById('logoAdmin').onclick = () => {
-            taps++; if(taps >= 5) { if(prompt("Password:") === "richen123") document.getElementById('admin-panel').style.display = "block"; taps = 0; }
-        };
+        document.getElementById('logoAdmin').onclick = () => { taps++; if(taps >= 5) { if(prompt("Password:") === "richen123") document.getElementById('admin-panel').style.display = "block"; taps = 0; } };
         function closeAdmin() { document.getElementById('admin-panel').style.display = "none"; }
-
         function renderAdminTable() {
             const tbody = document.getElementById('admTbody');
             if(!tbody) return;
-            tbody.innerHTML = products.map(p => `
-                <tr>
-                    <td>${p.name}</td>
-                    <td>Rp ${parseInt(p.price).toLocaleString()}</td>
-                    <td>${p.category}</td>
-                    <td>
-                        <button class="btn-edit" onclick="startEdit('${p.id}')">Edit</button>
-                        <button class="btn-delete" onclick="deleteProd('${p.id}')">Hapus</button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = products.map(p => `<tr><td>${p.name}</td><td>Rp ${parseInt(p.price).toLocaleString()}</td><td>${p.category}</td><td><button onclick="startEdit('${p.id}')">Edit</button> <button onclick="deleteProd('${p.id}')">Hapus</button></td></tr>`).join('');
         }
-
         function processProduct() {
             const n = document.getElementById('admName').value, pr = document.getElementById('admPrice').value, id = document.getElementById('editIdx').value;
             const save = (img) => {
@@ -545,34 +524,21 @@
                 resetForm(); alert("Berhasil!");
             };
             const f = document.getElementById('admFile');
-            if (f.files[0]) {
-                const r = new FileReader(); r.onload = (e) => save(e.target.result); r.readAsDataURL(f.files[0]);
-            } else save(document.getElementById('admImg').value || (id !== "-1" ? products.find(p => p.id == id).img : 'https://via.placeholder.com/400'));
+            if (f.files[0]) { const r = new FileReader(); r.onload = (e) => save(e.target.result); r.readAsDataURL(f.files[0]); }
+            else save(document.getElementById('admImg').value || (id !== "-1" ? products.find(p => p.id == id).img : 'https://via.placeholder.com/400'));
         }
-
         function startEdit(id) {
             const p = products.find(i => i.id == id);
-            document.getElementById('admName').value = p.name; document.getElementById('admPrice').value = p.price;
-            document.getElementById('admCat').value = p.category; document.getElementById('admDisc').value = p.disc;
-            document.getElementById('editIdx').value = p.id; document.getElementById('btnSave').innerText = "Update Produk";
-            window.scrollTo(0, document.getElementById('admin-panel').offsetTop);
+            document.getElementById('admName').value = p.name; document.getElementById('admPrice').value = p.price; document.getElementById('admCat').value = p.category; document.getElementById('admDisc').value = p.disc; document.getElementById('editIdx').value = p.id;
         }
-
         function deleteProd(id) { if(confirm("Hapus?")) db.ref('products/' + id).remove(); }
-        function resetForm() {
-            document.getElementById('editIdx').value = "-1"; document.getElementById('btnSave').innerText = "Simpan Ke Toko";
-            document.getElementById('admName').value = ""; document.getElementById('admPrice').value = ""; document.getElementById('admFile').value = "";
-        }
+        function resetForm() { document.getElementById('editIdx').value = "-1"; document.getElementById('admName').value = ""; document.getElementById('admPrice').value = ""; document.getElementById('admFile').value = ""; }
 
-        /* --- SLIDER LOGIC --- */
         let sIdx = 0;
         const slides = document.querySelectorAll('.slide');
         const dotsArea = document.getElementById('dotsArea');
-        if(dotsArea && slides.length > 0) {
-            dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="currentSlide(${i})"></div>`).join('');
-        }
+        if(dotsArea && slides.length > 0) dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="currentSlide(${i})"></div>`).join('');
         const dots = document.querySelectorAll('.dot');
-
         function moveSlide(n) {
             if(slides.length === 0) return;
             slides[sIdx].classList.remove('active'); 
@@ -582,18 +548,13 @@
             if(dots[sIdx]) dots[sIdx].classList.add('active');
         }
         function currentSlide(n) {
-            if(!slides[n]) return;
             slides[sIdx].classList.remove('active');
             if(dots[sIdx]) dots[sIdx].classList.remove('active');
             sIdx = n;
             slides[sIdx].classList.add('active');
             if(dots[sIdx]) dots[sIdx].classList.add('active');
         }
-        setInterval(() => {
-            if(document.getElementById('page-home').classList.contains('active-section')) {
-                moveSlide(1);
-            }
-        }, 5000);
+        setInterval(() => { if(document.getElementById('page-home').classList.contains('active-section')) moveSlide(1); }, 5000);
     </script>
 </body>
 </html>
