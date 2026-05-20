@@ -12,44 +12,106 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg); color: #333; overflow-x: hidden; width: 100%; }
 
-        /* --- NAVIGATION --- */
-        header { background: var(--black); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .header-main { display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
-        .logo { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; flex-shrink: 0; }
-        .search-bar { flex: 1; display: flex; background: var(--white); border-radius: 4px; overflow: hidden; max-width: 600px; min-width: 200px; }
-        @media (max-width: 600px) { .search-bar { order: 3; flex-basis: 100%; } .logo { font-size: 22px; } }
-        .search-bar input { flex: 1; border: none; padding: 10px 15px; outline: none; width: 100%; }
-        .search-bar button { background: var(--gold); border: none; padding: 0 20px; color: white; cursor: pointer; }
-        .header-icons { display: flex; gap: 20px; color: var(--white); font-size: 20px; flex-shrink: 0; }
-        .cart-icon { cursor: pointer; position: relative; }
-        .cart-count { position: absolute; top: -10px; right: -10px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
-
-        /* --- BANNER SLIDER (2 Foto) --- */
-        .slider-container { 
-            width: 100%; 
-            height: 450px; 
-            position: relative; 
-            overflow: hidden; 
-            background: #000; 
+        /* --- HEADER & NAVIGATION --- */
+        header { 
+            background: var(--black); 
+            padding: 15px 5%; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
         }
-        @media (max-width: 768px) {
-            .slider-container {
-                height: 250px; 
+        .header-main { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px;
+        }
+        @media (min-width: 769px) {
+            .header-main {
+                flex-direction: row; 
+                align-items: center;
+                justify-content: space-between;
             }
         }
-        .slide { 
-            width: 100%; 
-            height: 100%; 
-            position: absolute; 
-            opacity: 0; 
-            transition: opacity 0.8s ease-in-out; 
-            background-size: cover; 
-            background-position: center; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            will-change: opacity; 
+
+        .header-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
         }
+        @media (min-width: 769px) {
+            .header-top-row {
+                width: auto;
+                gap: 30px;
+            }
+        }
+
+        .logo { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; }
+        
+        /* Menu Navigasi */
+        .nav-menu { 
+            display: flex; 
+            gap: 15px; 
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        @media (min-width: 769px) {
+            .nav-menu {
+                background: none;
+                padding: 0;
+                gap: 20px;
+            }
+        }
+        .nav-link { 
+            color: #bbbbbb; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .nav-link:hover, .nav-link.active-page { 
+            color: var(--black); 
+            background: var(--gold);
+        }
+
+        /* Search & Cart Row */
+        .header-actions-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+        @media (min-width: 769px) {
+            .header-actions-row {
+                width: auto;
+                max-width: 400px;
+                flex: 1;
+                justify-content: flex-end;
+            }
+        }
+
+        .search-bar { flex: 1; display: flex; background: var(--white); border-radius: 4px; overflow: hidden; }
+        .search-bar input { flex: 1; border: none; padding: 10px 15px; outline: none; width: 100%; font-size: 14px; }
+        .search-bar button { background: var(--gold); border: none; padding: 0 15px; color: white; cursor: pointer; }
+        
+        .header-icons { display: flex; color: var(--white); font-size: 22px; flex-shrink: 0; }
+        .cart-icon { cursor: pointer; position: relative; padding: 5px; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
+
+        /* --- PAGES SYSTEM --- */
+        .page-section { display: none; }
+        .page-section.active-section { display: block; }
+
+        /* --- BANNER SLIDER --- */
+        .slider-container { width: 100%; height: 450px; position: relative; overflow: hidden; background: #000; }
+        @media (max-width: 768px) { .slider-container { height: 230px; } }
+        .slide { width: 100%; height: 100%; position: absolute; opacity: 0; transition: opacity 0.8s ease-in-out; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; will-change: opacity; }
         .slide.active { opacity: 1; }
         .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: var(--gold); border: none; padding: 15px; cursor: pointer; z-index: 10; font-size: 20px; }
         .prev { left: 0; } .next { right: 0; }
@@ -57,69 +119,23 @@
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
         .dot.active { background: var(--gold); width: 25px; border-radius: 10px; }
 
-        /* --- VISUAL GRID INTERACTIVE HIGHLIGHT KATEGORI --- */
-        .categories-grid-container {
-            padding: 30px 5% 10px;
-        }
-        .categories-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); /* 2 Kolom di Mobile */
-            gap: 15px; 
-        }
-        @media (min-width: 769px) { 
-            .categories-grid { 
-                grid-template-columns: repeat(4, 1fr); /* 4 Kolom di Desktop */
-                gap: 20px;
-            } 
-        }
-        .cat-grid-card {
-            background: var(--white);
-            border: 1px solid #eee;
-            border-bottom: 3px solid #eee;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        .cat-grid-card i {
-            font-size: 24px;
-            color: var(--black);
-            transition: all 0.3s ease;
-        }
-        .cat-grid-card span {
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
-            letter-spacing: 0.5px;
-        }
-        /* Hover Effect & Active State */
-        .cat-grid-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border-bottom-color: var(--gold);
-        }
-        .cat-grid-card:hover i {
-            color: var(--gold);
-        }
-        .cat-grid-card.active {
-            background: var(--white);
-            border: 1px solid var(--gold);
-            border-bottom: 3px solid var(--gold);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15);
-        }
-        .cat-grid-card.active i {
-            color: var(--gold);
-        }
+        /* --- HIGHLIGHT KATEGORI GRID --- */
+        .categories-grid-container { padding: 40px 5% 30px; }
+        .categories-title { text-align: center; font-weight: 700; margin-bottom: 25px; letter-spacing: 1px; font-size: 22px; color: var(--black); }
+        .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 769px) { .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        .cat-grid-card { background: var(--white); border: 1px solid #eee; border-bottom: 3px solid #eee; border-radius: 10px; padding: 25px 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .cat-grid-card i { font-size: 26px; color: var(--black); transition: all 0.3s ease; }
+        .cat-grid-card span { font-weight: 600; font-size: 14px; color: #333; letter-spacing: 0.5px; }
+        .cat-grid-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-bottom-color: var(--gold); }
+        .cat-grid-card:hover i { color: var(--gold); }
+        .cat-grid-card.active { background: var(--white); border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15); }
+        .cat-grid-card.active i { color: var(--gold); }
 
-        /* --- PRODUCTS --- */
-        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 5%; scroll-margin-top: 100px; }
+        /* --- PRODUCTS PAGE --- */
+        .product-page-header { padding: 30px 5% 10px; text-align: center; }
+        .product-page-header h2 { font-weight: 700; color: var(--black); font-size: 26px; margin-bottom: 10px; }
+        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 5% 40px; }
         @media (min-width: 600px) { .product-container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; } }
         .product-card { background: #fff; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s; position: relative; }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
@@ -133,6 +149,17 @@
         .action-btns { display: flex; gap: 5px; }
         .btn-cart { flex: 1; background: #fff; border: 1px solid var(--black); padding: 8px; cursor: pointer; border-radius: 4px; }
         .btn-buy { flex: 2; background: var(--black); color: #fff; border: none; padding: 8px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+
+        /* --- TENTANG KAMI PAGE --- */
+        .about-page-container { padding: 50px 5%; max-width: 1000px; margin: 0 auto; }
+        .about-header { text-align: center; margin-bottom: 40px; }
+        .about-header h2 { font-size: 32px; font-weight: 700; color: var(--black); position: relative; display: inline-block; padding-bottom: 10px; }
+        .about-header h2::after { content: ''; width: 60px; height: 3px; background: var(--gold); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .about-media { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 35px; background: #000; }
+        .about-media img, .about-media video { width: 100%; height: auto; display: block; max-height: 500px; object-fit: cover; }
+        .about-text-block { background: var(--white); padding: 35px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.02); line-height: 1.8; color: #555; }
+        .about-text-block p { margin-bottom: 20px; font-size: 16px; }
+        .about-text-block strong { color: var(--black); font-size: 18px; }
 
         /* --- ADMIN PANEL --- */
         #admin-panel { display: none; background: #fff; margin: 30px 5%; padding: 25px; border: 2px solid var(--gold); border-radius: 10px; }
@@ -150,63 +177,103 @@
         @media (max-width: 400px) { #cart-modal { width: 100%; } }
 
         /* --- FOOTER --- */
-        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 50px; }
+        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 60px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; }
+        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; font-weight: 600; letter-spacing: 0.5px; }
         .footer-grid p { color: #ccc; margin-bottom: 10px; cursor: pointer; font-size: 14px; }
-        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; }
+        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; transition: opacity 0.2s; }
+        .social-icons a:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-main">
-            <div class="logo" id="logoAdmin">RICHEN</div>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Cari parfum favorit..." onkeyup="liveSearch()">
-                <button aria-label="Search"><i class="fas fa-search"></i></button>
+            <div class="header-top-row">
+                <div class="logo" id="logoAdmin">RICHEN</div>
+                
+                <nav class="nav-menu">
+                    <span class="nav-link active-page" onclick="switchPage('home', this)">Home</span>
+                    <span class="nav-link" onclick="switchPage('produk', this)">Produk</span>
+                    <span class="nav-link" onclick="switchPage('tentang', this)">Tentang Kami</span>
+                </nav>
             </div>
-            <div class="header-icons">
-                <div class="cart-icon" onclick="toggleCart()">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="cart-count" id="cartCount">0</span>
+
+            <div class="header-actions-row">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Cari parfum favorit..." onkeyup="liveSearch()">
+                    <button aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-icons">
+                    <div class="cart-icon" onclick="toggleCart()">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="slider-container">
-        <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-        <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
-        
-        <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');"></div>
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');"></div>
+    <main id="page-home" class="page-section active-section">
+        <div class="slider-container">
+            <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            
+            <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');"></div>
+            <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');"></div>
 
-        <div class="dots-container" id="dotsArea"></div>
-    </div>
+            <div class="dots-container" id="dotsArea"></div>
+        </div>
 
-    <div class="categories-grid-container">
-        <div class="categories-grid">
-            <div class="cat-grid-card active" onclick="filterByCat('all', this)">
-                <i class="fas fa-border-all"></i>
-                <span>Semua Produk</span>
-            </div>
-            <div class="cat-grid-card" onclick="filterByCat('pria', this)">
-                <i class="fas fa-mars"></i>
-                <span>Parfum Pria</span>
-            </div>
-            <div class="cat-grid-card" onclick="filterByCat('wanita', this)">
-                <i class="fas fa-venus"></i>
-                <span>Parfum Wanita</span>
-            </div>
-            <div class="cat-grid-card" onclick="filterByCat('unisex', this)">
-                <i class="fas fa-transgender-alt"></i>
-                <span>Unisex</span>
+        <div class="categories-grid-container">
+            <div class="categories-title">Jelajahi Koleksi Aroma</div>
+            <div class="categories-grid">
+                <div class="cat-grid-card" onclick="selectCategoryAndRedirect('all')">
+                    <i class="fas fa-border-all"></i>
+                    <span>Semua Produk</span>
+                </div>
+                <div class="cat-grid-card" onclick="selectCategoryAndRedirect('pria')">
+                    <i class="fas fa-mars"></i>
+                    <span>Parfum Pria</span>
+                </div>
+                <div class="cat-grid-card" onclick="selectCategoryAndRedirect('wanita')">
+                    <i class="fas fa-venus"></i>
+                    <span>Parfum Wanita</span>
+                </div>
+                <div class="cat-grid-card" onclick="selectCategoryAndRedirect('unisex')">
+                    <i class="fas fa-transgender-alt"></i>
+                    <span>Unisex</span>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <div class="product-container" id="productGrid"></div>
+    <main id="page-produk" class="page-section">
+        <div class="product-page-header">
+            <h2 id="productDisplayTitle">Katalog Produk</h2>
+            <p style="color: #666; font-size: 14px;">Temukan karakteristik aroma exclusive kemewahan Anda</p>
+        </div>
+        <div class="product-container" id="productGrid"></div>
+    </main>
+
+    <main id="page-tentang" class="page-section">
+        <div class="about-page-container">
+            <div class="about-header">
+                <h2>Tentang RICHEN</h2>
+            </div>
+            
+            <div class="about-media">
+                <img src="https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg" alt="Richen Official Gallery">
+            </div>
+
+            <div class="about-text-block">
+                <p><strong>Selamat Datang di RICHEN Perfume Marketplace</strong></p>
+                <p>RICHEN lahir dari dedikasi tinggi untuk menghadirkan variasi wewangian premium berkualitas global yang dikurasi secara eksklusif. Kami percaya bahwa parfum bukan sekadar aroma, melainkan representasi identitas, kepercayaan diri, serta sebuah seni kemewahan yang melekat pada diri Anda.</p>
+                <p>Setiap produk di dalam katalog marketplace kami dirancang khusus menggunakan bahan-bahan baku pilihan bersertifikat, guna memastikan ketahanan keharuman yang impresif sepanjang hari, baik untuk karakteristik pria maskulin, wanita elegan, maupun varian universal modern (unisex).</p>
+                <p>Komitmen utama RICHEN adalah memberikan pengalaman belanja digital yang aman, profesional, bersih, dan modern yang terintegrasi penuh demi kepuasan pelanggan setia kami di seluruh penjuru Indonesia.</p>
+            </div>
+        </div>
+    </main>
 
     <div id="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
@@ -260,7 +327,7 @@
             <div>
                 <h4>Layanan</h4>
                 <p onclick="alert('Instagram: @richen_official\nTiktok: @richen.indonesia')">Akun Sosial Media</p>
-                <p onclick="alert('Cara Beli:\n1. Pilih Parfum\n2. Klik Beli Sekarang / Tambah Keranjang\n3. Selesaikan pembayaran via WA Admin')">Cara Pembelian</p>
+                <p onclick="alert('Cara Beli:\n1. Masuk ke halaman Produk\n2. Pilih Parfum\n3. Klik Beli Sekarang / Tambah Keranjang\n4. Selesaikan pembayaran via WA Admin')">Cara Pembelian</p>
                 <p onclick="alert('Pengiriman ke seluruh Indonesia via Ekspedisi terpercaya.')">Pengiriman</p>
             </div>
         </div>
@@ -287,6 +354,56 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let products = [], cart = [];
+        let currentFilterCategory = 'all';
+
+        // NAVIGASI HALAMAN (Diperbaiki dari duplikasi ID target)
+        function switchPage(pageId, element) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-page');
+            });
+            
+            // Menampilkan section berdasarkan ID yang tepat
+            const targetSection = document.getElementById('page-' + pageId);
+            if (targetSection) {
+                targetSection.classList.add('active-section');
+            }
+            
+            if(element) {
+                element.classList.add('active-page');
+            } else {
+                // Menyelaraskan menu navigasi jika fungsi dipicu dari luar navbar
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    let text = link.innerText.toLowerCase();
+                    if((pageId === 'home' && text === 'home') || (pageId === 'produk' && text === 'produk') || (pageId === 'tentang' && text === 'tentang kami')) {
+                        link.classList.add('active-page');
+                    }
+                });
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // REDIRECT KATEGORI DARI HOME KE HALAMAN PRODUK
+        function selectCategoryAndRedirect(category) {
+            currentFilterCategory = category;
+            applyProductFilter();
+            switchPage('produk'); // Berpindah ke halaman produk secara aman
+        }
+
+        function applyProductFilter() {
+            let filtered = products;
+            if (currentFilterCategory !== 'all') {
+                filtered = products.filter(p => p.category === currentFilterCategory);
+            }
+            const titles = { 'all': 'Katalog Semua Produk', 'pria': 'Koleksi Parfum Pria', 'wanita': 'Koleksi Parfum Wanita', 'unisex': 'Koleksi Varian Unisex' };
+            const titleElem = document.getElementById('productDisplayTitle');
+            if (titleElem) {
+                titleElem.innerText = titles[currentFilterCategory] || 'Katalog Produk';
+            }
+            renderProducts(filtered);
+        }
 
         db.ref('products').on('value', (snapshot) => {
             const data = snapshot.val();
@@ -294,11 +411,12 @@
             if (data) {
                 for (let id in data) products.push({ id, ...data[id] });
             }
-            renderProducts(products);
+            applyProductFilter();
         }, (error) => { console.error(error); });
 
         function renderProducts(data) {
             const grid = document.getElementById('productGrid');
+            if (!grid) return;
             grid.innerHTML = data.map(p => `
                 <div class="product-card">
                     ${p.disc ? `<div class="disc-badge">${p.disc} OFF</div>` : ''}
@@ -307,7 +425,7 @@
                         <div class="product-name">${p.name}</div>
                         <div class="product-price">Rp ${parseInt(p.price).toLocaleString('id-ID')}</div>
                         <div class="action-btns">
-                            <button class="btn-cart" onclick="addToCart('${p.id}')"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="btn-cart" onclick="addToCart('${p.id}')" aria-label="Tambah Keranjang"><i class="fas fa-shopping-cart"></i></button>
                             <button class="btn-buy" onclick="buyNow('${p.name}')">Beli</button>
                         </div>
                     </div>
@@ -317,18 +435,12 @@
         }
 
         function liveSearch() {
+            const activeSec = document.querySelector('.page-section.active-section');
+            if(activeSec && activeSec.id !== 'page-produk') {
+                switchPage('produk');
+            }
             const q = document.getElementById('searchInput').value.toLowerCase();
             renderProducts(products.filter(p => p.name.toLowerCase().includes(q)));
-        }
-
-        /* Interactive Filter Saring Barang & Auto-Scroll */
-        function filterByCat(cat, btn) {
-            document.querySelectorAll('.cat-grid-card').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts(cat === 'all' ? products : products.filter(p => p.category === cat));
-            
-            // Otomatis gulir (scroll) ke section produk setelah klik kategori
-            document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
         }
 
         function addToCart(id) {
@@ -357,13 +469,14 @@
         function removeItem(i) { cart.splice(i, 1); updateCartUI(); }
         function buyNow(n) { window.open(`https://wa.me/6283814559667?text=Saya ingin beli: ${n}`); }
         function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
+        
         function checkoutWhatsApp() {
             let m = "Halo RICHEN, saya ingin pesan:\n";
             cart.forEach(i => m += `- ${i.name} (${i.qty}x)\n`);
             window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(m)}`);
         }
 
-        /* --- ADMIN LOGIC --- */
+        /* --- ADMIN PANEL SYSTEM --- */
         let taps = 0;
         document.getElementById('logoAdmin').onclick = () => {
             taps++; if(taps >= 5) { if(prompt("Password:") === "richen123") document.getElementById('admin-panel').style.display = "block"; taps = 0; }
@@ -371,7 +484,9 @@
         function closeAdmin() { document.getElementById('admin-panel').style.display = "none"; }
 
         function renderAdminTable() {
-            document.getElementById('admTbody').innerHTML = products.map(p => `
+            const tbody = document.getElementById('admTbody');
+            if(!tbody) return;
+            tbody.innerHTML = products.map(p => `
                 <tr>
                     <td>${p.name}</td>
                     <td>Rp ${parseInt(p.price).toLocaleString()}</td>
@@ -411,30 +526,36 @@
             document.getElementById('admName').value = ""; document.getElementById('admPrice').value = ""; document.getElementById('admFile').value = "";
         }
 
-        /* --- SLIDER (Disesuaikan untuk 2 Slide otomatis) --- */
+        /* --- SLIDER LOGIC --- */
         let sIdx = 0;
         const slides = document.querySelectorAll('.slide');
-        
-        // Setup dot navigasi dinamis berbasis jumlah slide aktual
         const dotsArea = document.getElementById('dotsArea');
-        dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="currentSlide(${i})"></div>`).join('');
+        if(dotsArea && slides.length > 0) {
+            dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="currentSlide(${i})"></div>`).join('');
+        }
         const dots = document.querySelectorAll('.dot');
 
         function moveSlide(n) {
+            if(slides.length === 0) return;
             slides[sIdx].classList.remove('active'); 
-            dots[sIdx].classList.remove('active');
+            if(dots[sIdx]) dots[sIdx].classList.remove('active');
             sIdx = (sIdx + n + slides.length) % slides.length; 
             slides[sIdx].classList.add('active');
-            dots[sIdx].classList.add('active');
+            if(dots[sIdx]) dots[sIdx].classList.add('active');
         }
         function currentSlide(n) {
+            if(!slides[n]) return;
             slides[sIdx].classList.remove('active');
-            dots[sIdx].classList.remove('active');
+            if(dots[sIdx]) dots[sIdx].classList.remove('active');
             sIdx = n;
             slides[sIdx].classList.add('active');
-            dots[sIdx].classList.add('active');
+            if(dots[sIdx]) dots[sIdx].classList.add('active');
         }
-        setInterval(() => moveSlide(1), 5000);
+        setInterval(() => {
+            if(document.getElementById('page-home').classList.contains('active-section')) {
+                moveSlide(1);
+            }
+        }, 5000);
     </script>
 </body>
 </html>
