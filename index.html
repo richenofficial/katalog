@@ -24,24 +24,19 @@
         .cart-icon { cursor: pointer; position: relative; }
         .cart-count { position: absolute; top: -10px; right: -10px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
 
-        /* --- BANNER SLIDER (Disesuaikan untuk Laptop & HP) --- */
+        /* --- BANNER SLIDER (2 Foto) --- */
         .slider-container { 
             width: 100%; 
-            /* Tinggi untuk Laptop/Desktop */
             height: 450px; 
             position: relative; 
             overflow: hidden; 
             background: #000; 
         }
-
-        /* Responsive Height untuk HP (Mobile) */
         @media (max-width: 768px) {
             .slider-container {
-                /* Tinggi yang lebih proporsional untuk layar HP agar tidak terlalu jangkung */
                 height: 250px; 
             }
         }
-
         .slide { 
             width: 100%; 
             height: 100%; 
@@ -56,25 +51,75 @@
             will-change: opacity; 
         }
         .slide.active { opacity: 1; }
-        
-        /* Slide-content (Teks dihapus, filter none di CSS) */
-        .slide video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: none; }
-        
         .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: var(--gold); border: none; padding: 15px; cursor: pointer; z-index: 10; font-size: 20px; }
         .prev { left: 0; } .next { right: 0; }
         .dots-container { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
         .dot.active { background: var(--gold); width: 25px; border-radius: 10px; }
 
-        /* --- CATEGORIES --- */
-        .categories { display: flex; justify-content: flex-start; gap: 10px; padding: 20px; background: #fff; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-        .categories::-webkit-scrollbar { display: none; }
-        @media (min-width: 769px) { .categories { justify-content: center; } }
-        .cat-btn { padding: 8px 20px; border: 1px solid var(--gold); border-radius: 20px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s; flex-shrink: 0; }
-        .cat-btn.active, .cat-btn:hover { background: var(--gold); color: white; }
+        /* --- VISUAL GRID INTERACTIVE HIGHLIGHT KATEGORI --- */
+        .categories-grid-container {
+            padding: 30px 5% 10px;
+        }
+        .categories-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); /* 2 Kolom di Mobile */
+            gap: 15px; 
+        }
+        @media (min-width: 769px) { 
+            .categories-grid { 
+                grid-template-columns: repeat(4, 1fr); /* 4 Kolom di Desktop */
+                gap: 20px;
+            } 
+        }
+        .cat-grid-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-bottom: 3px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .cat-grid-card i {
+            font-size: 24px;
+            color: var(--black);
+            transition: all 0.3s ease;
+        }
+        .cat-grid-card span {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            letter-spacing: 0.5px;
+        }
+        /* Hover Effect & Active State */
+        .cat-grid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-bottom-color: var(--gold);
+        }
+        .cat-grid-card:hover i {
+            color: var(--gold);
+        }
+        .cat-grid-card.active {
+            background: var(--white);
+            border: 1px solid var(--gold);
+            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15);
+        }
+        .cat-grid-card.active i {
+            color: var(--gold);
+        }
 
         /* --- PRODUCTS --- */
-        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 5%; }
+        .product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 5%; scroll-margin-top: 100px; }
         @media (min-width: 600px) { .product-container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; } }
         .product-card { background: #fff; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s; position: relative; }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
@@ -134,26 +179,31 @@
         <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
         
-        <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner3.png');">
-        </div>
-
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');">
-        </div>
-
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner5.jpg');">
-        </div>
-
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');">
-        </div>
+        <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');"></div>
+        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');"></div>
 
         <div class="dots-container" id="dotsArea"></div>
     </div>
 
-    <div class="categories">
-        <div class="cat-btn active" onclick="filterByCat('all', this)">Semua Produk</div>
-        <div class="cat-btn" onclick="filterByCat('pria', this)">Parfum Pria</div>
-        <div class="cat-btn" onclick="filterByCat('wanita', this)">Parfum Wanita</div>
-        <div class="cat-btn" onclick="filterByCat('unisex', this)">Unisex</div>
+    <div class="categories-grid-container">
+        <div class="categories-grid">
+            <div class="cat-grid-card active" onclick="filterByCat('all', this)">
+                <i class="fas fa-border-all"></i>
+                <span>Semua Produk</span>
+            </div>
+            <div class="cat-grid-card" onclick="filterByCat('pria', this)">
+                <i class="fas fa-mars"></i>
+                <span>Parfum Pria</span>
+            </div>
+            <div class="cat-grid-card" onclick="filterByCat('wanita', this)">
+                <i class="fas fa-venus"></i>
+                <span>Parfum Wanita</span>
+            </div>
+            <div class="cat-grid-card" onclick="filterByCat('unisex', this)">
+                <i class="fas fa-transgender-alt"></i>
+                <span>Unisex</span>
+            </div>
+        </div>
     </div>
 
     <div class="product-container" id="productGrid"></div>
@@ -271,10 +321,14 @@
             renderProducts(products.filter(p => p.name.toLowerCase().includes(q)));
         }
 
+        /* Interactive Filter Saring Barang & Auto-Scroll */
         function filterByCat(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-grid-card').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderProducts(cat === 'all' ? products : products.filter(p => p.category === cat));
+            
+            // Otomatis gulir (scroll) ke section produk setelah klik kategori
+            document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
         }
 
         function addToCart(id) {
@@ -357,13 +411,28 @@
             document.getElementById('admName').value = ""; document.getElementById('admPrice').value = ""; document.getElementById('admFile').value = "";
         }
 
-        /* --- SLIDER --- */
+        /* --- SLIDER (Disesuaikan untuk 2 Slide otomatis) --- */
         let sIdx = 0;
         const slides = document.querySelectorAll('.slide');
+        
+        // Setup dot navigasi dinamis berbasis jumlah slide aktual
+        const dotsArea = document.getElementById('dotsArea');
+        dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="currentSlide(${i})"></div>`).join('');
+        const dots = document.querySelectorAll('.dot');
+
         function moveSlide(n) {
             slides[sIdx].classList.remove('active'); 
+            dots[sIdx].classList.remove('active');
             sIdx = (sIdx + n + slides.length) % slides.length; 
             slides[sIdx].classList.add('active');
+            dots[sIdx].classList.add('active');
+        }
+        function currentSlide(n) {
+            slides[sIdx].classList.remove('active');
+            dots[sIdx].classList.remove('active');
+            sIdx = n;
+            slides[sIdx].classList.add('active');
+            dots[sIdx].classList.add('active');
         }
         setInterval(() => moveSlide(1), 5000);
     </script>
