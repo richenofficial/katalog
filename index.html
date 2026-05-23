@@ -246,6 +246,16 @@
         /* --- CART SIDEBAR --- */
         #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
         #cart-modal.active { right: 0; }
+
+        /* --- FOOTER SECTION --- */
+        footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 60px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-grid h4 { color: var(--gold); margin-bottom: 20px; font-weight: 600; }
+        .footer-grid p { font-size: 14px; color: #bbb; line-height: 1.6; cursor: pointer; transition: color 0.2s; }
+        .footer-grid p:hover { color: var(--gold); }
+        .social-icons { margin-top: 15px; }
+        .social-icons a { font-size: 24px; color: var(--gold); margin-right: 15px; transition: opacity 0.2s; }
+        .social-icons a:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -279,7 +289,7 @@
         <div class="slider-container">
             <button class="slide-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
             <button class="slide-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
-            <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg');"></div>
+            <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner5.jpg');"></div>
             <div class="slide" style="background-image: url('https://raw.githubusercontent.com/richenofficial/katalog/main/Banner2.jpg');"></div>
             <div class="dots-container" id="dotsArea"></div>
         </div>
@@ -398,15 +408,23 @@
         <div class="footer-grid">
             <div>
                 <h4>RICHEN OFFICIAL</h4>
-                <p>Marketplace parfum modern dengan kurasi aroma terbaik buatan Santri.</p>
+                <p style="cursor: default; color: #bbb;">Marketplace parfum modern dengan kurasi aroma terbaik buatan Santri.</p>
                 <div class="social-icons">
                     <a href="https://www.instagram.com/richen_official?igsh=MmE3b3R6NGYyMGZ4" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@richen.indonesia?_r=1&_t=ZS-96Ke6N0RyYK" target="_blank"><i class="fab fa-tiktok"></i></a>
                     <a href="https://wa.me/6283814559667" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
+            <div>
+                <h4>Layanan</h4>
+                <p onclick="alert('Instagram: @richen_official\nTiktok: @richen.indonesia')">Akun Sosial Media</p>
+                <p onclick="alert('Cara Beli:\n1. Masuk ke halaman Produk\n2. Pilih Parfum\n3. Klik Beli Sekarang / Tambah Keranjang\n4. Selesaikan pembayaran via WA Admin')">Cara Pembelian</p>
+                <p onclick="alert('Pengiriman ke seluruh Indonesia via Ekspedisi terpercaya.')">Pengiriman</p>
+            </div>
         </div>
-        <div style="text-align:center; margin-top:40px; font-size:12px; color:#777; border-top:1px solid #333; padding-top:20px;">&copy; 2026 RICHEN Perfume Marketplace.</div>
+        <div style="text-align:center; margin-top:40px; font-size:12px; color:#777; border-top:1px solid #333; padding-top:20px;">
+            &copy; 2026 RICHEN Perfume Marketplace.
+        </div>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
@@ -433,7 +451,6 @@
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
 
-        // Fungsi Tambah Baris Dinamis di Form Admin (Menyertakan Harga Varian)
         function addBottleRow(name = "", price = "", img = "") {
             const container = document.getElementById('admBottleListContainer');
             if(!container) return;
@@ -510,7 +527,6 @@
             renderAdminTable();
         }
 
-        /* --- SCRIPT MODAL VARIANT DENGAN UPDATE HARGA SINKRON --- */
         function openVariantModal(productId, actionType) {
             const p = products.find(item => item.id === productId);
             if(!p) return;
@@ -521,7 +537,6 @@
 
             document.getElementById('vModalProductName').innerText = p.name;
             
-            // Render pilihan botol dan tampilkan harga masing-masing varian di bawah nama botol
             const productBottles = p.bottles || [{ name: "Default", price: p.price, img: "" }];
             const bGrid = document.getElementById('bottleGrid');
             bGrid.innerHTML = productBottles.map((b, index) => `
@@ -532,7 +547,6 @@
                 </div>
             `).join('');
 
-            // Tampilkan harga awal modal berdasarkan varian pertama yang aktif
             document.getElementById('vModalCurrentPrice').innerText = "Rp " + parseInt(productBottles[0].price || p.price).toLocaleString('id-ID');
 
             const productAromas = p.aromas || ["Original"];
@@ -546,7 +560,6 @@
             document.getElementById('variantModal').classList.add('active');
         }
 
-        // Ketika botol diklik, ganti index aktif dan ubah text harga di atas modal secara real-time
         function selectBottleVariant(index, currentPrice) {
             selectedBottleIndex = index;
             document.querySelectorAll('.bottle-option').forEach(el => el.classList.remove('selected'));
@@ -580,7 +593,7 @@
                     cart.push({
                         ...p, 
                         cartItemId: cartItemId,
-                        price: chosenPrice, // Mengunci harga sesuai varian ukuran yang dibeli
+                        price: chosenPrice, 
                         chosenBottle: chosenBottle,
                         chosenAroma: chosenAroma,
                         qty: 1
