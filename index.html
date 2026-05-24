@@ -183,17 +183,8 @@
         @media (min-width: 600px) { .product-container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; } }
         .product-card { background: #fff; border-radius: 10px; border: 1px solid #ddd; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s; position: relative; }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        
-        /* Modifikasi Fitur Gambar Responsif Sempurna Tanpa Terpotong */
-        .product-img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            object-fit: contain; 
-            background-color: #ffffff;
-            padding: 8px;
-        }
-        
+        .product-img { width: 100%; height: 200px; object-fit: cover; }
+        @media (min-width: 600px) { .product-img { height: 240px; } }
         .disc-badge { position: absolute; top: 10px; left: 10px; background: #e74c3c; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; z-index: 2; }
         .product-info { padding: 12px; flex-grow: 1; }
         .product-name { font-weight: 600; font-size: 14px; margin-bottom: 5px; height: 40px; overflow: hidden; }
@@ -247,10 +238,49 @@
         .bottle-option { border: 2px solid #eee; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; transition: 0.2s; }
         .bottle-option img { width: 100%; height: 70px; object-fit: contain; margin-bottom: 5px; border-radius: 4px; background: #fafafa; }
         .bottle-option span { font-size: 11px; font-weight: 600; display: block; color: #333; word-break: break-all; }
-        .bottle-option .b-opt-price { font-size: 10px; color: var(--gold); font-weight: bold; margin-top: 2px; }
+        
+        /* NILAI HARGA PER VARIANT TERSEMBUNYI SESUAI KEINGINAN */
+        .bottle-option .b-opt-price { display: none; }
         .bottle-option:hover { border-color: #ddd; }
         .bottle-option.selected { border-color: var(--gold); background: rgba(214, 175, 55, 0.05); }
         .aroma-select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; }
+
+        /* Style untuk Pilihan Menceklis Kemasan */
+        .box-checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .box-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fafafa;
+            border: 2px solid #eee;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .box-checkbox-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+        .box-checkbox-label:hover {
+            border-color: #ddd;
+        }
+        .box-checkbox-label.checked {
+            border-color: var(--gold);
+            background: rgba(214, 175, 55, 0.03);
+        }
+        
+        /* BIAR HARGA DI KOTAK CHECKBOX TIDAK MUNCUL */
+        .box-price-text { display: none; }
 
         /* --- CART SIDEBAR --- */
         #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
@@ -347,6 +377,20 @@
             <div class="variant-section-title">2. Pilih Varian Aroma:</div>
             <select class="aroma-select" id="aromaSelect"></select>
 
+            <div class="variant-section-title">3. Pilihan Kemasan:</div>
+            <div class="box-checkbox-container">
+                <label class="box-checkbox-label id-tanpa-box checked" id="lblTanpaBox" onclick="selectPackaging(false)">
+                    <input type="radio" name="packaging_select" id="radioTanpaBox" checked>
+                    <span>Tanpa Sliding Box</span>
+                    <span class="box-price-text">Free</span>
+                </label>
+                <label class="box-checkbox-label id-pakai-box" id="lblPakaiBox" onclick="selectPackaging(true)">
+                    <input type="radio" name="packaging_select" id="radioPakaiBox">
+                    <span>Pakai Sliding Box</span>
+                    <span class="box-price-text" id="vModalBoxPriceText">+Rp 0</span>
+                </label>
+            </div>
+
             <div style="margin-top: 25px; display: flex; gap: 10px;">
                 <button class="btn-cart" onclick="closeVariantModal()" style="padding: 12px;">Batal</button>
                 <button class="btn-buy" id="btnSubmitVariant" style="padding: 12px; margin: 0;">Konfirmasi</button>
@@ -382,6 +426,10 @@
                 <label style="font-size:12px; font-weight:600;">Foto Produk Banner Utama:</label>
                 <input type="text" id="admImg" placeholder="Link URL Foto Utama">
                 <input type="file" id="admFile" accept="image/*" style="margin-top:5px;">
+            </div>
+            <div>
+                <label style="font-size:12px; font-weight:600; color: #27ae60;">Harga Tambahan Sliding Box (Rp):</label>
+                <input type="number" id="admBoxPrice" placeholder="Contoh: 15000" value="15000">
             </div>
 
             <div class="admin-section-box" style="grid-column: 1 / -1;">
@@ -457,6 +505,7 @@
         let currentFilterCategory = 'all';
 
         let selectedBottleIndex = 0;
+        let isSlidingBoxSelected = false;
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
 
@@ -524,4 +573,323 @@
                     ${p.disc ? `<div class="disc-badge">${p.disc} OFF</div>` : ''}
                     <img src="${p.img || 'https://via.placeholder.com/400'}" class="product-img">
                     <div class="product-info">
-                        <div class="product
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">Rp ${parseInt(p.price).toLocaleString('id-ID')}</div>
+                        <div class="action-btns">
+                            <button class="btn-cart" onclick="openVariantModal('${p.id}', 'cart')"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="btn-buy" onclick="openVariantModal('${p.id}', 'buy')">Beli</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            renderAdminTable();
+        }
+
+        function openVariantModal(productId, actionType) {
+            const p = products.find(item => item.id === productId);
+            if(!p) return;
+
+            currentActiveProductId = productId;
+            variantTargetAction = actionType;
+            selectedBottleIndex = 0; 
+            isSlidingBoxSelected = false; 
+
+            document.getElementById('radioTanpaBox').checked = true;
+            document.getElementById('radioPakaiBox').checked = false;
+            document.getElementById('lblTanpaBox').classList.add('checked');
+            document.getElementById('lblPakaiBox').classList.remove('checked');
+
+            document.getElementById('vModalProductName').innerText = p.name;
+            
+            const boxPrice = parseInt(p.boxPrice || 0);
+            document.getElementById('vModalBoxPriceText').innerText = "+Rp " + boxPrice.toLocaleString('id-ID');
+
+            const productBottles = p.bottles || [{ name: "Default", price: p.price, img: "" }];
+            const bGrid = document.getElementById('bottleGrid');
+            bGrid.innerHTML = productBottles.map((b, index) => `
+                <div class="bottle-option ${index === selectedBottleIndex ? 'selected' : ''}" id="bot-${index}" onclick="selectBottleVariant(${index}, ${b.price})">
+                    <img src="${b.img || 'https://via.placeholder.com/150'}" alt="${b.name}">
+                    <span>${b.name}</span>
+                    <div class="b-opt-price">Rp ${parseInt(b.price || p.price).toLocaleString('id-ID')}</div>
+                </div>
+            `).join('');
+
+            updateModalPriceDisplay();
+
+            const productAromas = p.aromas || ["Original"];
+            const aSelect = document.getElementById('aromaSelect');
+            aSelect.innerHTML = productAromas.map(aroma => `<option value="${aroma}">${aroma}</option>`).join('');
+
+            document.getElementById('btnSubmitVariant').onclick = function() {
+                executeVariantAction();
+            };
+
+            document.getElementById('variantModal').classList.add('active');
+        }
+
+        /* PERBAIKAN: Menambahkan manipulasi class visual "selected" pada pilihan botol */
+        function selectBottleVariant(index, currentPrice) {
+            selectedBottleIndex = index;
+            document.querySelectorAll('.bottle-option').forEach(el => el.classList.remove('selected'));
+            const activeEl = document.getElementById('bot-' + index);
+            if(activeEl) activeEl.classList.add('selected');
+            updateModalPriceDisplay();
+        }
+
+        function selectPackaging(useBox) {
+            isSlidingBoxSelected = useBox;
+            if(useBox) {
+                document.getElementById('radioPakaiBox').checked = true;
+                document.getElementById('radioTanpaBox').checked = false;
+                document.getElementById('lblPakaiBox').classList.add('checked');
+                document.getElementById('lblTanpaBox').classList.remove('checked');
+            } else {
+                document.getElementById('radioTanpaBox').checked = true;
+                document.getElementById('radioPakaiBox').checked = false;
+                document.getElementById('lblTanpaBox').classList.add('checked');
+                document.getElementById('lblPakaiBox').classList.remove('checked');
+            }
+            updateModalPriceDisplay();
+        }
+
+        function updateModalPriceDisplay() {
+            const p = products.find(item => item.id === currentActiveProductId);
+            if(!p) return;
+            const listBottles = p.bottles || [{ name: "Default", price: p.price, img: "" }];
+            
+            let totalPrice = parseInt(listBottles[selectedBottleIndex].price || p.price);
+            if(isSlidingBoxSelected) {
+                totalPrice += parseInt(p.boxPrice || 0);
+            }
+            document.getElementById('vModalCurrentPrice').innerText = "Rp " + totalPrice.toLocaleString('id-ID');
+        }
+
+        function closeVariantModal() {
+            document.getElementById('variantModal').classList.remove('active');
+        }
+
+        function executeVariantAction() {
+            const p = products.find(item => item.id === currentActiveProductId);
+            if(!p) return;
+            
+            const listBottles = p.bottles || [{ name: "Default", price: p.price, img: "" }];
+            const chosenBottle = listBottles[selectedBottleIndex].name;
+            let chosenPrice = parseInt(listBottles[selectedBottleIndex].price || p.price);
+            const chosenAroma = document.getElementById('aromaSelect').value;
+            
+            let packagingText = "Tanpa Sliding Box";
+            if(isSlidingBoxSelected) {
+                chosenPrice += parseInt(p.boxPrice || 0);
+                packagingText = "Pakai Sliding Box";
+            }
+
+            closeVariantModal();
+
+            if (variantTargetAction === 'cart') {
+                const cartItemId = p.id + "-" + selectedBottleIndex + "-" + (isSlidingBoxSelected ? 'box' : 'nobox') + "-" + chosenAroma.replace(/\s+/g, '');
+                const ex = cart.find(i => i.cartItemId === cartItemId);
+                
+                if(ex) {
+                    ex.qty++;
+                } else {
+                    cart.push({
+                        ...p, 
+                        cartItemId: cartItemId,
+                        price: chosenPrice, 
+                        chosenBottle: chosenBottle,
+                        chosenAroma: chosenAroma,
+                        chosenPackaging: packagingText,
+                        qty: 1
+                    });
+                }
+                updateCartUI(); 
+                alert("Berhasil dimasukkan ke keranjang belanja!");
+            } else {
+                const textMessage = `Halo RICHEN, saya ingin pesan:\n- *${p.name}*\n  Varian Aroma: ${chosenAroma}\n  Ukuran Botol: ${chosenBottle}\n  Kemasan: ${packagingText}\n  Harga Total: Rp ${chosenPrice.toLocaleString('id-ID')}\n  Jumlah: 1x`;
+                window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(textMessage)}`);
+            }
+        }
+
+        function updateCartUI() {
+            let total = 0, count = 0;
+            document.getElementById('cartList').innerHTML = cart.map((item, index) => {
+                total += item.price * item.qty; count += item.qty;
+                return `<div class="cart-item" style="display:flex; align-items:center; gap:10px; margin-bottom:15px; border-bottom:1px dashed #eee; padding-bottom:10px;">
+                    <img src="${item.img}" style="width:50px;height:50px;object-fit:cover;border-radius:5px">
+                    <div style="flex-grow:1;font-size:12px">
+                        <b>${item.name}</b><br>
+                        <span style="color:#666;">Aroma: ${item.chosenAroma}</span><br>
+                        <span style="color:#666;">Botol: ${item.chosenBottle}</span><br>
+                        <span style="color:#27ae60; font-weight:600;">${item.chosenPackaging}</span><br>
+                        <span style="color:var(--gold); font-weight:600;">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span>
+                    </div>
+                    <input type="number" value="${item.qty}" min="1" onchange="changeQty(${index}, this.value)" style="width:45px;">
+                    <i class="fas fa-trash" style="color:red;cursor:pointer" onclick="removeItem(${index})"></i>
+                </div>`;
+            }).join('');
+            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString('id-ID');
+            document.getElementById('cartCount').innerText = count;
+        }
+
+        function changeQty(i, v) { cart[i].qty = parseInt(v); updateCartUI(); }
+        function removeItem(i) { cart.splice(i, 1); updateCartUI(); }
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('active'); }
+        
+        function checkoutWhatsApp() {
+            if(cart.length === 0) return alert("Keranjang kosong.");
+            let m = "Halo RICHEN, saya ingin pesan:\n";
+            cart.forEach(i => { m += `- *${i.name}* (${i.qty}x)\n  Aroma: ${i.chosenAroma}\n  Botol: ${i.chosenBottle}\n  Kemasan: ${i.chosenPackaging}\n  Harga Satuan: Rp ${parseInt(i.price).toLocaleString('id-ID')}\n`; });
+            window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(m)}`);
+        }
+
+        function liveSearch() {
+            const activeSec = document.querySelector('.page-section.active-section');
+            if(activeSec && activeSec.id !== 'page-produk') switchPage('produk');
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            renderProducts(products.filter(p => p.name.toLowerCase().includes(q)));
+        }
+
+        /* --- MANAJEMEN ADMIN --- */
+        let taps = 0;
+        document.getElementById('logoAdmin').onclick = () => { 
+            taps++; 
+            if(taps >= 5) { 
+                if(prompt("Password:") === "richen123") {
+                    document.getElementById('admin-panel').style.display = "block";
+                    resetForm();
+                    addInitialRows();
+                }
+                taps = 0; 
+            } 
+        };
+        
+        function closeAdmin() { document.getElementById('admin-panel').style.display = "none"; }
+        
+        function renderAdminTable() {
+            const tbody = document.getElementById('admTbody');
+            if(!tbody) return;
+            tbody.innerHTML = products.map(p => `<tr><td>${p.name}</td><td>Rp ${parseInt(p.price).toLocaleString()}</td><td>${p.category}</td><td><button onclick="startEdit('${p.id}')">Edit</button> <button onclick="deleteProd('${p.id}')">Hapus</button></td></tr>`).join('');
+        }
+
+        function processProduct() {
+            const n = document.getElementById('admName').value;
+            const pr = document.getElementById('admPrice').value;
+            const boxPr = document.getElementById('admBoxPrice').value;
+            const id = document.getElementById('editIdx').value;
+
+            if(!n || !pr) return alert("Nama dan Harga produk wajib diisi!");
+
+            const bottleRows = document.querySelectorAll('.bottle-input-item');
+            let bottlesData = [];
+            bottleRows.forEach(row => {
+                const bName = row.querySelector('.b-name').value;
+                const bPrice = row.querySelector('.b-price').value;
+                const bImg = row.querySelector('.b-img').value;
+                if(bName) bottlesData.push({ name: bName, price: parseInt(bPrice || pr), img: bImg });
+            });
+
+            const aromaRows = document.querySelectorAll('.aroma-input-item');
+            let aromasData = [];
+            aromaRows.forEach(row => {
+                const aName = row.querySelector('.a-name').value;
+                if(aName) aromasData.push(aName);
+            });
+
+            const save = (imgUrl) => {
+                const data = { 
+                    name: n, 
+                    price: parseInt(pr), 
+                    category: document.getElementById('admCat').value, 
+                    disc: document.getElementById('admDisc').value, 
+                    img: imgUrl,
+                    bottles: bottlesData,
+                    aromas: aromasData,
+                    boxPrice: parseInt(boxPr || 0) 
+                };
+                
+                if (id === "-1") db.ref('products').push(data); 
+                else db.ref('products/' + id).update(data);
+                
+                resetForm(); 
+                alert("Data Berhasil Disimpan!");
+                closeAdmin();
+            };
+
+            const f = document.getElementById('admFile');
+            if (f.files[0]) { 
+                const r = new FileReader(); 
+                r.onload = (e) => save(e.target.result); 
+                r.readAsDataURL(f.files[0]); 
+            } else {
+                save(document.getElementById('admImg').value || (id !== "-1" ? products.find(p => p.id == id).img : 'https://via.placeholder.com/400'));
+            }
+        }
+
+        function startEdit(id) {
+            const p = products.find(i => i.id == id);
+            if(!p) return;
+
+            document.getElementById('admName').value = p.name; 
+            document.getElementById('admPrice').value = p.price; 
+            document.getElementById('admCat').value = p.category; 
+            document.getElementById('admDisc').value = p.disc; 
+            document.getElementById('editIdx').value = p.id;
+            document.getElementById('admImg').value = p.img || "";
+            document.getElementById('admBoxPrice').value = p.boxPrice !== undefined ? p.boxPrice : 15000;
+
+            document.getElementById('admBottleListContainer').innerHTML = "";
+            if(p.bottles) {
+                p.bottles.forEach(b => addBottleRow(b.name, b.price, b.img));
+            }
+
+            document.getElementById('admAromaListContainer').innerHTML = "";
+            if(p.aromas) {
+                p.aromas.forEach(a => addAromaRow(a));
+            }
+
+            document.getElementById('admHeader').innerText = "Edit Produk: " + p.name;
+            window.scrollTo({ top: document.getElementById('admin-panel').offsetTop, behavior: 'smooth' });
+        }
+
+        function deleteProd(id) { if(confirm("Hapus produk ini secara permanen?")) db.ref('products/' + id).remove(); }
+        
+        function resetForm() { 
+            document.getElementById('editIdx').value = "-1"; 
+            document.getElementById('admName').value = ""; 
+            document.getElementById('admPrice').value = ""; 
+            document.getElementById('admFile').value = ""; 
+            document.getElementById('admImg').value = "";
+            document.getElementById('admBoxPrice').value = "15000";
+            document.getElementById('admHeader').innerText = "Tambah Produk";
+            
+            const bCont = document.getElementById('admBottleListContainer');
+            const aCont = document.getElementById('admAromaListContainer');
+            if(bCont) bCont.innerHTML = "";
+            if(aCont) aCont.innerHTML = "";
+        }
+
+        function addInitialRows() {
+            addBottleRow("30ml", "55000", "");
+            addBottleRow("50ml", "85000", "");
+            addAromaRow("Kasturi Maskulin");
+        }
+
+        let sIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsArea = document.getElementById('dotsArea');
+        if(dotsArea && slides.length > 0) dotsArea.innerHTML = Array.from({length: slides.length}).map((_, i) => `<div class=\"dot ${i===0?'active':''}\" onclick=\"currentSlide(${i})\"></div>`).join('');
+        const dots = document.querySelectorAll('.dot');
+        function moveSlide(n) {
+            if(slides.length === 0) return;
+            slides[sIdx].classList.remove('active'); if(dots[sIdx]) dots[sIdx].classList.remove('active');
+            sIdx = (sIdx + n + slides.length) % slides.length; 
+            slides[sIdx].classList.add('active'); if(dots[sIdx]) dots[sIdx].classList.add('active');
+        }
+        function currentSlide(n) {
+            slides[sIdx].classList.remove('active'); if(dots[sIdx]) dots[sIdx].classList.remove('active');
+            sIdx = n; slides[sIdx].classList.add('active'); if(dots[sIdx]) dots[sIdx].classList.add('active');
+        }
+        setInterval(() => { if(document.getElementById('page-home').classList.contains('active-section')) moveSlide(1); }, 5000);
+    </script>
+</body>
+</html>
