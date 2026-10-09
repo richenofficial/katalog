@@ -381,28 +381,27 @@
             <div class="about-media"><img src="https://raw.githubusercontent.com/richenofficial/katalog/main/Banner.jpg" alt="Richen Official Gallery"></div>
             <div class="about-text-block">
                 <p><strong>Bismillahirrohmanirrohim. Peluang Koneksi & Jaringan Pemasaran Global Pesat.</strong></p>
-                <p>Dalam rangka memperluas khazanah dan syiar aroma wewangian premium RICHEN ke seluruh pelosok nusantara secara kilat, kami membuka gerbang kolaborasi akbar. RICHEN secara resmi menyatakan **Open Reseller, Dropshipper, dan Affiliate Marketing** bagi siapa saja yang ingin membangun koneksi bisnis tepercaya dan berpenghasilan tinggi dalam waktu singkat.</p>
+                <p>Dalam rangka memperluas khazanah dan syiar aroma wewangian premium RICHEN ke seluruh pelosok nusantara secara kilat, kami membuka gerbang kolaborasi akbar.</p>
                 
                 <strong>1. Program Reseller (Grosir Khazanah)</strong>
-                <p>Program khusus bagi Anda yang ingin menyetok produk dengan modal terjangkau namun margin keuntungan maksimal. Reseller akan mendapatkan akses pemotongan harga grosir eksklusif langsung di database sistem aplikasi kami untuk setiap varian botol parfum yang dipilih.</p>
+                <p>Program khusus bagi Anda yang ingin menyetok produk dengan modal terjangkau. Reseller akan mendapatkan akses produk eksklusif langsung di database sistem aplikasi kami untuk setiap varian botol parfum yang dipilih.</p>
                 
                 <strong>2. Program Dropshipper (Niaga Praktis)</strong>
-                <p>Solusi muamalah bisnis modern tanpa modal stok barang and tanpa ribet packing. Anda fokus memasarkan produk, biar kami yang mengemas dan mengirimkan pesanan langsung ke alamat konsumen Anda dengan mencantumkan nama toko Anda sebagai pengirimnya. Sistem rekap nota WhatsApp otomatis kami telah terintegrasi untuk mencetak data dropship secara instan.</p>
+                <p>Solusi muamalah bisnis modern tanpa modal stok barang and tanpa ribet packing. Anda fokus memasarkan produk, biar kami yang mengemas dan mengirimkan pesanan langsung ke alamat konsumen Anda. Sistem rekap nota WhatsApp otomatis kami telah terintegrasi untuk mencetak data pesanan secara instan.</p>
                 
                 <strong>3. Program Affiliate Marketing (Syiar Komisi)</strong>
-                <p>Sistem pemasaran digital tercepat tanpa modal. Cukup sebarkan link koneksi katalog RICHEN ke jaringan sosial media Anda. Setiap kali ada pembeli atau rekanan yang memesan lewat kode referral unik Anda, Anda berhak menerima komisi penjualan tetap yang akan diakumulasikan secara transparan dan jujur oleh tim manajemen pusat.</p>
+                <p>Sistem pemasaran digital tercepat tanpa modal. Cukup sebarkan link koneksi katalog RICHEN ke jaringan sosial media Anda untuk memperluas jangkauan.</p>
                 
                 <strong>Benefit Bergabung Menjadi Mitra RICHEN:</strong>
                 <ul class="partnership-benefit-list">
                     <li>Akses produk parfum eksklusif berkualitas premium racikan Santri yang disukai pasar.</li>
-                    <li>Potongan harga khusus (Diskon Mitra) otomatis langsung memotong nominal belanja di aplikasi.</li>
-                    <li>Sistem pelacakan nota pesanan otomatis yang aman terkunci lewat otorisasi password mitra rahasia.</li>
+                    <li>Sistem pelacakan nota pesanan otomatis yang aman dan terstruktur dengan baik.</li>
                     <li>Bimbingan materi promosi digital lengkap untuk mempercepat akselerasi penjualan Anda.</li>
                 </ul>
 
                 <p style="text-align: center; font-weight: 600; color: var(--gold); margin-top: 30px; border: 1px solid var(--gold); padding: 15px; border-radius: 8px;">
                     Mari berjejaring, jalin koneksi erat, dan raih keberkahan niaga bersama RICHEN Perfume!<br>
-                    Hubungi WhatsApp Admin untuk mendapatkan akses password verifikasi akun kemitraan resmi Anda sekarang juga.
+                    Hubungi WhatsApp Admin untuk informasi kerja sama resmi Anda sekarang juga.
                 </p>
             </div>
         </div>
@@ -431,33 +430,6 @@
                     <span>Pakai Sliding Box</span>
                     <span class="box-price-text" id="vModalBoxPriceText">+Rp 0</span>
                 </label>
-            </div>
-
-            <div id="partnerZone" style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 10px;">
-                <span id="btnTriggerPartner" onclick="togglePartnerInput()" style="font-size: 11px; color: #999; cursor: pointer; text-decoration: underline;"><i class="fas fa-handshake"></i> Order sebagai Mitra (Reseller / Dropshipper / Affiliate)?</span>
-                
-                <div id="partnerInputForm" style="display: none; margin-top: 8px; gap: 5px;">
-                    <input type="password" id="partnerToken" placeholder="Masukkan Password Akun Mitra Anda" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px; font-size:12px;">
-                    <button onclick="verifyPartnerToken()" style="background:var(--gold); border:none; padding:5px 12px; color:white; border-radius:4px; font-size:12px; font-weight:600; cursor:pointer;">Masuk</button>
-                </div>
-
-                <div id="partnerOptionsWrapper" style="display: none; margin-top: 10px; background: rgba(39, 174, 96, 0.05); border: 1px dashed #27ae60; padding: 10px; border-radius: 6px;">
-                    <div style="font-size:12px; font-weight:700; color:#27ae60; margin-bottom:5px;"><i class="fas fa-check-circle"></i> Akun Mitra Aktif: <span id="activeRoleLabel">Dropshipper</span></div>
-                    <select id="partnerRoleSelect" onchange="changePartnerRoleViaSelect()" style="width:100%; padding:8px; border-radius:4px; font-size:12px; outline:none; border:1px solid #27ae60;">
-                        <option value="dropship">Kirim Sebagai Dropshipper RICHEN</option>
-                        <option value="reseller">Order Sebagai Reseller (Harga Grosir)</option>
-                        <option value="affiliate">Gunakan Sistem Komisi Affiliate</option>
-                    </select>
-                    
-                    <div id="affCodeWrapper" style="display:none; margin-top: 8px;">
-                        <input type="text" id="affiliateCodeInput" placeholder="Masukkan ID / Nama Affiliate Anda" onkeyup="updateModalPriceDisplay()" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-size:12px; mb-2;">
-                        
-                        <div style="margin-top: 8px; display: flex; gap: 5px;">
-                            <input type="text" id="generatedAffLink" readonly placeholder="Link Affiliate Anda akan muncul di sini" style="flex: 1; padding: 6px; font-size: 11px; border: 1px solid #ddd; background: #fafafa; border-radius: 4px; outline: none;">
-                            <button type="button" onclick="copyAffiliateLink()" style="background: #2980b9; color: white; border: none; padding: 6px 12px; font-size: 11px; font-weight: 600; border-radius: 4px; cursor: pointer;">Salin Link</button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div style="margin-top: 25px; display: flex; gap: 10px;">
@@ -499,14 +471,6 @@
             <div>
                 <label style="font-size:12px; font-weight:600; color: #27ae60;">Harga Tambahan Sliding Box (Rp):</label>
                 <input type="number" id="admBoxPrice" placeholder="Contoh: 15000" value="15000">
-            </div>
-            <div>
-                <label style="font-size:12px; font-weight:600; color: #2980b9;">Potongan Harga Reseller / Grosir (Rp):</label>
-                <input type="number" id="admResellerDiscount" placeholder="Contoh: 20000" value="20000">
-            </div>
-            <div>
-                <label style="font-size:12px; font-weight:600; color: #e67e22;">Potongan Harga Dropshipper (Rp):</label>
-                <input type="number" id="admDropshipDiscount" placeholder="Contoh: 5000" value="5000">
             </div>
 
             <div class="admin-section-box" style="grid-column: 1 / -1;">
@@ -583,8 +547,6 @@
 
         let selectedBottleIndex = 0;
         let isSlidingBoxSelected = false;
-        let currentPartnerRole = "dropship"; 
-        let isPartnerVerified = false; 
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
 
@@ -627,7 +589,6 @@
             currentFilterCategory = category;
             applyProductFilter();
             
-            // Otomatis sinkronkan tanda pilihan tombol di halaman produk saat diklik dari home
             document.querySelectorAll('.product-cat-btn').forEach(btn => {
                 btn.classList.remove('active-cat');
             });
@@ -649,12 +610,10 @@
             currentFilterCategory = category;
             applyProductFilter();
             
-            // Menghapus tanda pilihan (active-cat) dari semua tombol kategori teks
             document.querySelectorAll('.product-cat-btn').forEach(btn => {
                 btn.classList.remove('active-cat');
             });
             
-            // Menambahkan tanda pilihan (active-cat) ke tombol yang sedang diklik
             const activeBtn = document.getElementById('btn-cat-' + category);
             if (activeBtn) {
                 activeBtn.classList.add('active-cat');
@@ -696,16 +655,6 @@
             variantTargetAction = actionType;
             selectedBottleIndex = 0; 
             isSlidingBoxSelected = false; 
-            isPartnerVerified = false;
-            currentPartnerRole = "dropship"; 
-
-            document.getElementById('partnerInputForm').style.display = "none";
-            document.getElementById('partnerOptionsWrapper').style.display = "none";
-            document.getElementById('btnTriggerPartner').style.display = "inline-block";
-            document.getElementById('partnerToken').value = "";
-            document.getElementById('affCodeWrapper').style.display = "none";
-            document.getElementById('partnerRoleSelect').value = "dropship";
-            document.getElementById('generatedAffLink').value = "";
 
             document.getElementById('radioTanpaBox').checked = true;
             document.getElementById('radioPakaiBox').checked = false;
@@ -763,39 +712,6 @@
             updateModalPriceDisplay();
         }
 
-        function togglePartnerInput() {
-            document.getElementById('partnerInputForm').style.display = "flex";
-            document.getElementById('btnTriggerPartner').style.display = "none";
-        }
-
-        function verifyPartnerToken() {
-            const token = document.getElementById('partnerToken').value;
-            if(token === "richenmitra") {
-                isPartnerVerified = true;
-                document.getElementById('partnerInputForm').style.display = "none";
-                document.getElementById('partnerOptionsWrapper').style.display = "block";
-                document.getElementById('activeRoleLabel').innerText = "Dropshipper";
-                alert("Sukses! Akun Kemitraan RICHEN Berhasil Diverifikasi.");
-            } else {
-                alert("Password Salah! Silakan hubungi admin RICHEN.");
-            }
-        }
-
-        function changePartnerRoleViaSelect() {
-            if(!isPartnerVerified) return;
-            const selectValue = document.getElementById('partnerRoleSelect').value;
-            currentPartnerRole = selectValue;
-            
-            if(selectValue === 'affiliate') {
-                document.getElementById('affCodeWrapper').style.display = "block";
-                document.getElementById('activeRoleLabel').innerText = "Affiliate Marketing";
-            } else {
-                document.getElementById('affCodeWrapper').style.display = "none";
-                document.getElementById('activeRoleLabel').innerText = selectValue === 'reseller' ? 'Reseller (Grosir)' : 'Dropshipper';
-            }
-            updateModalPriceDisplay();
-        }
-
         function updateModalPriceDisplay() {
             const p = products.find(item => item.id === currentActiveProductId);
             if(!p) return;
@@ -806,29 +722,8 @@
                 totalPrice += parseInt(p.boxPrice || 0);
             }
 
-            if(isPartnerVerified) {
-                if(currentPartnerRole === 'reseller') {
-                    totalPrice -= parseInt(p.resellerDiscount || 0);
-                } else if(currentPartnerRole === 'dropship') {
-                    totalPrice -= parseInt(p.dropshipDiscount || 0);
-                } else if(currentPartnerRole === 'affiliate') {
-                    const affId = document.getElementById('affiliateCodeInput').value.trim() || "MITRA";
-                    const baseUrl = window.location.origin + window.location.pathname;
-                    document.getElementById('generatedAffLink').value = `${baseUrl}?prod=${currentActiveProductId}&ref=${affId}`;
-                }
-            }
-
             if(totalPrice < 0) totalPrice = 0;
             document.getElementById('vModalCurrentPrice').innerText = "Rp " + totalPrice.toLocaleString('id-ID');
-        }
-
-        function copyAffiliateLink() {
-            const linkInput = document.getElementById('generatedAffLink');
-            if(!linkInput.value) return alert("Silakan isi nama atau ID Affiliate terlebih dahulu!");
-            linkInput.select();
-            linkInput.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(linkInput.value);
-            alert("Link Affiliate berhasil disalin! Siap dibagikan ke Media Sosial.");
         }
 
         function closeVariantModal() {
@@ -850,25 +745,11 @@
                 packagingText = "Pakai Sliding Box";
             }
 
-            let roleLabelText = "Pembeli Reguler";
-            if(isPartnerVerified) {
-                if(currentPartnerRole === 'reseller') {
-                    chosenPrice -= parseInt(p.resellerDiscount || 0);
-                    roleLabelText = "Mitra Reseller (Grosir)";
-                } else if(currentPartnerRole === 'dropship') {
-                    chosenPrice -= parseInt(p.dropshipDiscount || 0);
-                    roleLabelText = "Mitra Dropshipper";
-                } else if(currentPartnerRole === 'affiliate') {
-                    const affCode = document.getElementById('affiliateCodeInput').value || "Tidak Diisi";
-                    roleLabelText = `Mitra Affiliate (Referral ID: ${affCode})`;
-                }
-            }
-
             if(chosenPrice < 0) chosenPrice = 0;
             closeVariantModal();
 
             if (variantTargetAction === 'cart') {
-                const cartItemId = p.id + "-" + selectedBottleIndex + "-" + (isSlidingBoxSelected ? 'box' : 'nobox') + "-" + (isPartnerVerified ? currentPartnerRole : 'reguler') + "-" + chosenAroma.replace(/\s+/g, '');
+                const cartItemId = p.id + "-" + selectedBottleIndex + "-" + (isSlidingBoxSelected ? 'box' : 'nobox') + "-" + chosenAroma.replace(/\s+/g, '');
                 const ex = cart.find(i => i.cartItemId === cartItemId);
                 
                 if(ex) {
@@ -881,19 +762,13 @@
                         chosenBottle: chosenBottle,
                         chosenAroma: chosenAroma,
                         chosenPackaging: packagingText,
-                        chosenPartnerRole: roleLabelText,
                         qty: 1
                     });
                 }
                 updateCartUI(); 
                 alert("Berhasil dimasukkan ke keranjang belanja!");
             } else {
-                let dropshipFormatText = "";
-                if(isPartnerVerified && currentPartnerRole === 'dropship') {
-                    dropshipFormatText = `\n\n*DATA PENGIRIMAN DROPSHIP*\n- Nama Pengirim: \n- No HP Pengirim: \n- Nama Penerima: \n- Alamat Lengkap: `;
-                }
-
-                const textMessage = `Halo RICHEN, saya ingin pesan:\n- *${p.name}*\n  Varian Aroma: ${chosenAroma}\n  Ukuran Botol: ${chosenBottle}\n  Kemasan: ${packagingText}\n  Status Akun: ${roleLabelText}\n  Harga Total: Rp ${chosenPrice.toLocaleString('id-ID')}\n  Jumlah: 1x${dropshipFormatText}`;
+                const textMessage = `Halo RICHEN, saya ingin pesan:\n- *${p.name}*\n  Varian Aroma: ${chosenAroma}\n  Ukuran Botol: ${chosenBottle}\n  Kemasan: ${packagingText}\n  Harga Total: Rp ${chosenPrice.toLocaleString('id-ID')}\n  Jumlah: 1x`;
                 window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(textMessage)}`);
             }
         }
@@ -909,7 +784,6 @@
                         <span style="color:#666;">Aroma: ${item.chosenAroma}</span><br>
                         <span style="color:#666;">Botol: ${item.chosenBottle}</span><br>
                         <span style="color:#27ae60; font-weight:600;">${item.chosenPackaging}</span><br>
-                        <span style="color:#2980b9; font-weight:600;">[${item.chosenPartnerRole || 'Pembeli Reguler'}]</span><br>
                         <span style="color:var(--gold); font-weight:600;">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span>
                     </div>
                     <input type="number" value="${item.qty}" min="1" onchange="changeQty(${index}, this.value)" style="width:45px;">
@@ -927,7 +801,7 @@
         function checkoutWhatsApp() {
             if(cart.length === 0) return alert("Keranjang kosong.");
             let m = "Halo RICHEN, saya ingin pesan:\n";
-            cart.forEach(i => { m += `- *${i.name}* (${i.qty}x)\n  Aroma: ${i.chosenAroma}\n  Botol: ${i.chosenBottle}\n  Kemasan: ${i.chosenPackaging}\n  Status: ${i.chosenPartnerRole || 'Reguler'}\n  Harga Satuan: Rp ${parseInt(i.price).toLocaleString('id-ID')}\n`; });
+            cart.forEach(i => { m += `- *${i.name}* (${i.qty}x)\n  Aroma: ${i.chosenAroma}\n  Botol: ${i.chosenBottle}\n  Kemasan: ${i.chosenPackaging}\n  Harga Satuan: Rp ${parseInt(i.price).toLocaleString('id-ID')}\n`; });
             window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(m)}`);
         }
 
@@ -964,8 +838,6 @@
             const n = document.getElementById('admName').value;
             const pr = document.getElementById('admPrice').value;
             const boxPr = document.getElementById('admBoxPrice').value;
-            const resDisc = document.getElementById('admResellerDiscount').value;
-            const dropDisc = document.getElementById('admDropshipDiscount').value;
             const id = document.getElementById('editIdx').value;
 
             if(!n || !pr) return alert("Nama dan Harga produk wajib diisi!");
@@ -995,9 +867,7 @@
                     img: imgUrl,
                     bottles: bottlesData,
                     aromas: aromasData,
-                    boxPrice: parseInt(boxPr || 0),
-                    resellerDiscount: parseInt(resDisc || 0),
-                    dropshipDiscount: parseInt(dropDisc || 0)
+                    boxPrice: parseInt(boxPr || 0)
                 };
                 
                 if (id === "-1") db.ref('products').push(data); 
@@ -1029,8 +899,6 @@
             document.getElementById('editIdx').value = p.id;
             document.getElementById('admImg').value = p.img || "";
             document.getElementById('admBoxPrice').value = p.boxPrice !== undefined ? p.boxPrice : 15000;
-            document.getElementById('admResellerDiscount').value = p.resellerDiscount !== undefined ? p.resellerDiscount : 20000;
-            document.getElementById('admDropshipDiscount').value = p.dropshipDiscount !== undefined ? p.dropshipDiscount : 5000;
 
             document.getElementById('admBottleListContainer').innerHTML = "";
             if(p.bottles) {
@@ -1055,8 +923,6 @@
             document.getElementById('admFile').value = ""; 
             document.getElementById('admImg').value = "";
             document.getElementById('admBoxPrice').value = "15000";
-            document.getElementById('admResellerDiscount').value = "20000";
-            document.getElementById('admDropshipDiscount').value = "5000";
             document.getElementById('admHeader').innerText = "Tambah Produk";
             
             const bCont = document.getElementById('admBottleListContainer');
@@ -1086,34 +952,6 @@
             slides[sIdx].classList.remove('active'); if(dots[sIdx]) dots[sIdx].classList.remove('active');
             sIdx = n; slides[sIdx].classList.add('active'); if(dots[sIdx]) dots[sIdx].classList.add('active');
         }
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refId = urlParams.get('ref');
-            const targetProd = urlParams.get('prod');
-            
-            if (refId) {
-                console.log("Pengunjung datang via Affiliate ID: " + refId);
-                if (targetProd) {
-                    setTimeout(() => {
-                        if (products.length > 0) {
-                            switchPage('produk');
-                            openVariantModal(targetProd, 'buy');
-                            isPartnerVerified = true;
-                            currentPartnerRole = 'affiliate';
-                            document.getElementById('partnerInputForm').style.display = "none";
-                            document.getElementById('btnTriggerPartner').style.display = "none";
-                            document.getElementById('partnerOptionsWrapper').style.display = "block";
-                            document.getElementById('partnerRoleSelect').value = "affiliate";
-                            document.getElementById('activeRoleLabel').innerText = "Affiliate Marketing";
-                            document.getElementById('affCodeWrapper').style.display = "block";
-                            document.getElementById('affiliateCodeInput').value = refId;
-                            updateModalPriceDisplay();
-                        }
-                    }, 1500);
-                }
-            }
-        });
 
         setInterval(() => { if(document.getElementById('page-home').classList.contains('active-section')) moveSlide(1); }, 5000);
     </script>
