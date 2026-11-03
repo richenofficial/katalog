@@ -510,6 +510,15 @@
         .btn-neg-wa { background: #25D366; color: #fff; padding: 12px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; font-size: 14px; transition: 0.2s; }
         .btn-neg-wa:hover { background: #1eb755; }
 
+        /* --- LANGKAH 2: KIRIM BUKTI KE WA --- */
+        .rewards-flow-box.proof-locked { opacity: 0.55; pointer-events: none; position: relative; }
+        .proof-lock-note { display: none; font-size: 12px; color: #c0392b; font-weight: 600; margin-bottom: 12px; }
+        .rewards-flow-box.proof-locked .proof-lock-note { display: block; }
+        .proof-preview { display: none; margin-top: 8px; max-width: 140px; max-height: 140px; border-radius: 8px; border: 1px solid #ddd; object-fit: cover; }
+        .proof-status-note { display: none; margin-top: 12px; background: #eef9f2; border: 1px solid #27ae60; border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #1e7e47; line-height: 1.6; }
+        .btn-send-proof { width: 100%; background: #25D366; color: #fff; border: none; padding: 13px; border-radius: 4px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-send-proof:hover { background: #1eb755; }
+
         /* --- POPUP ULASAN TERSALIN & REDIRECT MARKETPLACE --- */
         .copy-redirect-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -836,14 +845,14 @@
         <div class="rewards-page-container">
             <div class="rewards-header">
                 <h2>Richen Lucky Spin Rewards</h2>
-                <p>Berikan ulasan positif pengalaman parfum Anda untuk membuka fitur roda hadiah impian!</p>
+                <p>Posting ulasan positif di marketplace, kirim buktinya ke WhatsApp admin, lalu putar roda hadiah impian!</p>
             </div>
 
             <!-- STEP 1: FORM ULASAN POSITIF -->
             <div class="rewards-flow-box">
                 <div class="rewards-step-title">
                     <span class="rewards-step-number">1</span>
-                    Kirim Ulasan & Bukti Pembelian Anda
+                    Tulis Ulasan & Posting di Marketplace
                 </div>
                 
                 <form id="rewardReviewForm" onsubmit="handleReviewSubmit(event)">
@@ -884,27 +893,43 @@
                         </select>
                     </div>
 
-                    <div class="reward-form-group">
-                        <label>Upload Bukti Foto Screenshot Ulasan/Pesanan:</label>
-                        <input type="file" id="revFile" accept="image/*" required style="padding: 8px;">
-                    </div>
-
                     <p style="font-size: 12px; color: #777; line-height: 1.5; margin: 5px 0 0;">
                         <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                         Setelah menekan tombol di bawah, ulasan Anda <b>otomatis tersalin</b> lalu Anda diarahkan ke marketplace. Tinggal <b>tempel (paste)</b> di kolom ulasan produk.
                     </p>
                     <button type="submit" class="btn-buy" style="width: 100%; padding: 12px; margin-top: 10px; font-size: 15px;">
-                        <i class="fas fa-copy"></i> Salin Ulasan, Buka Marketplace & Buka Spin Wheel
+                        <i class="fas fa-copy"></i> Salin Ulasan & Buka Marketplace
                     </button>
                 </form>
             </div>
 
-            <!-- STEP 2: SPIN WHEEL (TERKUNCI / TERBUKA) -->
+            <!-- STEP 2: KIRIM BUKTI ULASAN KE WHATSAPP -->
+            <div class="rewards-flow-box proof-locked" id="proofBox">
+                <div class="rewards-step-title">
+                    <span class="rewards-step-number">2</span>
+                    Kirim Bukti Ulasan Marketplace ke WhatsApp
+                </div>
+                <div class="proof-lock-note"><i class="fas fa-lock"></i> Selesaikan langkah 1 terlebih dahulu untuk membuka langkah ini.</div>
+                <p style="font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px;">
+                    Setelah ulasan Anda tayang di marketplace, ambil <b>screenshot</b>-nya, pilih fotonya di bawah, lalu kirim ke WhatsApp admin. <b>Spin Wheel baru terbuka setelah bukti dikirim ke WhatsApp.</b>
+                </p>
+                <div class="reward-form-group">
+                    <label>Pilih Screenshot Ulasan di Marketplace:</label>
+                    <input type="file" id="proofFile" accept="image/*" style="padding: 8px;" onchange="previewProofFile()">
+                    <img id="proofPreview" class="proof-preview" alt="Preview bukti ulasan">
+                </div>
+                <button type="button" class="btn-send-proof" id="btnSendProof" onclick="sendProofToWA()">
+                    <i class="fab fa-whatsapp" style="font-size: 18px; margin-right: 6px;"></i> Kirim Bukti ke WhatsApp
+                </button>
+                <div class="proof-status-note" id="proofStatusNote"></div>
+            </div>
+
+            <!-- STEP 3: SPIN WHEEL (TERKUNCI / TERBUKA) -->
             <div class="wheel-section-wrapper">
                 <div class="wheel-overlay-locked" id="wheelOverlay">
                     <i class="fas fa-lock"></i>
                     <h3>Fitur Spin Wheel Terkunci</h3>
-                    <p>Silakan isi dan kirimkan ulasan positif produk RICHEN beserta bukti screenshot di atas untuk membuka akses spin roda keberuntungan.</p>
+                    <p>Posting ulasan positif di marketplace, lalu kirim screenshot buktinya ke WhatsApp admin (langkah 1 &amp; 2 di atas) untuk membuka akses spin roda keberuntungan.</p>
                 </div>
 
                 <h3 style="font-size: 22px; color: var(--black); font-weight: 700; margin-bottom: 5px;">Roda Keberuntungan Hadiah RICHEN</h3>
@@ -937,7 +962,7 @@
                 <button type="button" class="btn-cr-copy" onclick="recopyReview()">
                     <i class="fas fa-copy" style="margin-right: 6px;"></i> <span id="crCopyLabel">Salin Ulang Ulasan</span>
                 </button>
-                <button type="button" class="btn-cr-close" onclick="closeCopyRedirectModal()">Tutup & lanjut putar roda</button>
+                <button type="button" class="btn-cr-close" onclick="closeCopyRedirectModal()">Tutup & lanjut kirim bukti</button>
             </div>
         </div>
     </div>
@@ -1156,7 +1181,7 @@
                             <th>Rating</th>
                             <th>Ulasan</th>
                             <th>Platform Marketplace Target</th>
-                            <th>Bukti Screenshot</th>
+                            <th>Status Bukti (WA)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -1428,7 +1453,6 @@
             const phone = document.getElementById('revPhone').value.trim();
             const comment = document.getElementById('revComment').value.trim();
             const platform = document.getElementById('revPlatform').value;
-            const fileInput = document.getElementById('revFile');
 
             if(!name || !phone || !comment) {
                 alert("Mohon lengkapi semua isian formulir ulasan!");
@@ -1445,35 +1469,127 @@
             // Salin ulasan SEKARANG (masih dalam aksi klik pengguna, agar tidak diblokir browser)
             const copyPromise = copyTextToClipboard(comment);
 
-            const submitData = (imgData) => {
-                const reviewObj = {
-                    name,
-                    phone,
-                    rating: currentRating,
-                    comment,
-                    platform,
-                    proofImg: imgData || "",
-                    timestamp: new Date().toLocaleString('id-ID')
-                };
-
-                db.ref('reviews').push(reviewObj);
-
-                isWheelUnlocked = true;
-                document.getElementById('wheelOverlay').style.display = "none";
-                document.getElementById('btnSpin').disabled = false;
-
-                copyPromise.then(copied => {
-                    showCopyRedirectModal({ name, phone, comment, platform, rating: currentRating, copied });
-                });
+            // Simpan ulasan; spin TETAP terkunci sampai bukti dikirim ke WhatsApp
+            lockWheel();
+            const reviewObj = {
+                name,
+                phone,
+                rating: currentRating,
+                comment,
+                platform,
+                proofStatus: "Menunggu bukti dikirim ke WA",
+                timestamp: new Date().toLocaleString('id-ID')
             };
+            const newRef = db.ref('reviews').push(reviewObj);
+            currentReviewKey = newRef.key;
+            reviewSession = { name, phone, comment, platform, rating: currentRating };
 
-            if (fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (ev) => submitData(ev.target.result);
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                submitData("");
+            resetProofStep();
+            unlockProofStep();
+            saveRewardSession('proof');
+
+            copyPromise.then(copied => {
+                showCopyRedirectModal({ name, phone, comment, platform, rating: currentRating, copied });
+            });
+        }
+
+        /* --- LANGKAH 2: KIRIM BUKTI ULASAN KE WHATSAPP --- */
+        const REWARD_STORAGE_KEY = 'richenRewardSession';
+        let reviewSession = null;
+        let currentReviewKey = null;
+
+        function saveRewardSession(stage) {
+            try {
+                sessionStorage.setItem(REWARD_STORAGE_KEY, JSON.stringify({ stage, review: reviewSession, key: currentReviewKey }));
+            } catch (err) {}
+        }
+
+        function restoreRewardSession() {
+            try {
+                const raw = sessionStorage.getItem(REWARD_STORAGE_KEY);
+                if (!raw) return;
+                const d = JSON.parse(raw);
+                if (!d || !d.review) return;
+                reviewSession = d.review;
+                currentReviewKey = d.key || null;
+                if (d.stage === 'proof') {
+                    unlockProofStep();
+                } else if (d.stage === 'unlocked') {
+                    unlockProofStep();
+                    unlockWheel();
+                    showProofSentNote();
+                }
+            } catch (err) {}
+        }
+
+        function unlockProofStep() {
+            document.getElementById('proofBox').classList.remove('proof-locked');
+        }
+
+        function resetProofStep() {
+            const f = document.getElementById('proofFile');
+            if (f) f.value = "";
+            const prev = document.getElementById('proofPreview');
+            if (prev) { prev.style.display = "none"; prev.removeAttribute('src'); }
+            const note = document.getElementById('proofStatusNote');
+            if (note) note.style.display = "none";
+        }
+
+        function lockWheel() {
+            isWheelUnlocked = false;
+            document.getElementById('wheelOverlay').style.display = "flex";
+            document.getElementById('btnSpin').disabled = true;
+        }
+
+        function unlockWheel() {
+            isWheelUnlocked = true;
+            document.getElementById('wheelOverlay').style.display = "none";
+            document.getElementById('btnSpin').disabled = false;
+        }
+
+        function previewProofFile() {
+            const f = document.getElementById('proofFile').files[0];
+            const prev = document.getElementById('proofPreview');
+            if (!f) { prev.style.display = "none"; return; }
+            const reader = new FileReader();
+            reader.onload = (ev) => { prev.src = ev.target.result; prev.style.display = "block"; };
+            reader.readAsDataURL(f);
+        }
+
+        function showProofSentNote() {
+            const note = document.getElementById('proofStatusNote');
+            note.innerHTML = `<i class="fas fa-check-circle"></i> WhatsApp admin sudah dibuka. Di chat WhatsApp, tekan ikon <b>klip / +</b>, <b>lampirkan screenshot bukti ulasan</b>, lalu kirim. <b>Spin Wheel sudah terbuka</b>, selamat memutar!`;
+            note.style.display = "block";
+        }
+
+        function sendProofToWA() {
+            if (!reviewSession) {
+                alert("Selesaikan langkah 1 dulu: tulis ulasan dan posting di marketplace.");
+                return;
             }
+            const file = document.getElementById('proofFile').files[0];
+            if (!file) {
+                alert("Pilih screenshot bukti ulasan marketplace Anda terlebih dahulu!");
+                return;
+            }
+
+            const s = reviewSession;
+            const waText = `Halo Admin RICHEN, saya *${s.name}* (${s.phone}) mengirim bukti ulasan Bintang ${s.rating} di *${s.platform}*:\n\n"${s.comment}"\n\n(Screenshot bukti ulasan saya lampirkan di chat ini.) Mohon diverifikasi agar saya bisa memutar Spin Rewards. Terima kasih!`;
+            window.open(`https://wa.me/6283814559667?text=${encodeURIComponent(waText)}`, '_blank');
+
+            if (currentReviewKey) {
+                db.ref('reviews/' + currentReviewKey).update({
+                    proofStatus: "Bukti dikirim ke WA",
+                    proofSentAt: new Date().toLocaleString('id-ID')
+                });
+            }
+
+            unlockWheel();
+            saveRewardSession('unlocked');
+            showProofSentNote();
+            setTimeout(() => {
+                document.querySelector('.wheel-section-wrapper').scrollIntoView({ behavior: 'smooth' });
+            }, 600);
         }
 
         /* --- SALIN ULASAN OTOMATIS & REDIRECT KE MARKETPLACE --- */
@@ -1536,7 +1652,7 @@
             if (data.copied) {
                 icon.className = "fas fa-check-circle cr-icon";
                 title.innerText = "Ulasan Berhasil Disalin!";
-                desc.innerHTML = `Terima kasih <b>${data.name}</b>, ulasan Anda sudah tersalin otomatis. Di halaman <b>${destName}</b>, cukup <b>tempel (paste)</b> ulasan ini di kolom ulasan produk. Spin Wheel juga sudah terbuka!`;
+                desc.innerHTML = `Terima kasih <b>${data.name}</b>, ulasan Anda sudah tersalin otomatis. Di halaman <b>${destName}</b>, cukup <b>tempel (paste)</b> ulasan ini di kolom ulasan produk. Setelah itu, kembali ke sini untuk <b>mengirim screenshot bukti ke WhatsApp</b> agar Spin Wheel terbuka.`;
 
                 let remaining = REDIRECT_DELAY_SECONDS;
                 countdown.innerHTML = `Mengarahkan ke ${destName} dalam <b>${remaining}</b> detik...`;
@@ -1551,7 +1667,7 @@
             } else {
                 icon.className = "fas fa-exclamation-circle cr-icon warn";
                 title.innerText = "Salin Manual Dulu, Ya";
-                desc.innerHTML = `Browser Anda memblokir penyalinan otomatis. Tekan <b>Salin Ulang Ulasan</b> dulu, lalu buka <b>${destName}</b> dan tempel ulasannya. Spin Wheel sudah terbuka!`;
+                desc.innerHTML = `Browser Anda memblokir penyalinan otomatis. Tekan <b>Salin Ulang Ulasan</b> dulu, lalu buka <b>${destName}</b> dan tempel ulasannya. Setelah itu, kembali ke sini untuk <b>mengirim screenshot bukti ke WhatsApp</b> agar Spin Wheel terbuka.`;
                 countdown.innerHTML = "";
             }
 
@@ -1577,8 +1693,8 @@
         function closeCopyRedirectModal() {
             clearInterval(redirectTimer);
             document.getElementById('copyRedirectModal').classList.remove('active');
-            const wheel = document.querySelector('.wheel-section-wrapper');
-            if (wheel) wheel.scrollIntoView({ behavior: 'smooth' });
+            const proofBox = document.getElementById('proofBox');
+            if (proofBox) proofBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function showNegativeWarningModal() {
@@ -1647,6 +1763,7 @@
             if(!isWheelUnlocked || isSpinning) return;
             isSpinning = true;
             document.getElementById('btnSpin').disabled = true;
+            saveRewardSession('spun');
 
             const canvas = document.getElementById('spinCanvas');
             const numSegments = 4;
@@ -1668,7 +1785,7 @@
             setTimeout(() => {
                 isSpinning = false;
                 const wonPrize = wheelPrizes[winningIndex] || "Hadiah Eksklusif";
-                const revName = document.getElementById('revName').value || "Pelanggan";
+                const revName = (reviewSession && reviewSession.name) || document.getElementById('revName').value || "Pelanggan";
                 
                 alert(`SELAMAT ${revName.toUpperCase()}!\n\nAnda Memenangkan: [ ${wonPrize} ]!\n\nKlaim hadiah Anda sekarang melalui WhatsApp Admin dengan menunjukkan hasil spin ini.`);
                 
@@ -2082,7 +2199,7 @@
                     <td><span style="color:#f1c40f;">${'★'.repeat(r.rating)}</span> (${r.rating})</td>
                     <td>${r.comment}</td>
                     <td><b>${r.platform}</b></td>
-                    <td>${r.proofImg ? `<a href="${r.proofImg}" target="_blank">Lihat Bukti</a>` : '-'}</td>
+                    <td>${r.proofImg ? `<a href="${r.proofImg}" target="_blank">Lihat Bukti</a>` : (r.proofStatus ? `<span style="color:${r.proofStatus.indexOf('Bukti dikirim') === 0 ? '#27ae60' : '#e67e22'}; font-weight:600;">${r.proofStatus}</span>${r.proofSentAt ? `<br><small>${r.proofSentAt}</small>` : ''}` : '-')}</td>
                     <td><button onclick="deleteReview('${r.id}')" style="color:red;">Hapus</button></td>
                 </tr>
             `).join('');
@@ -2229,6 +2346,8 @@
             addBottleRow("50ml", "85000", "");
             addAromaRow("Kasturi Maskulin");
         }
+
+        restoreRewardSession();
 
         /* BANNER SLIDER */
         let sIdx = 0;
