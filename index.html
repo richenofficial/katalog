@@ -1529,6 +1529,7 @@
         function resetProofStep() {
             const f = document.getElementById('proofFile');
             if (f) f.value = "";
+            revokeProofPreview();
             const prev = document.getElementById('proofPreview');
             if (prev) { prev.style.display = "none"; prev.removeAttribute('src'); }
             const note = document.getElementById('proofStatusNote');
@@ -1547,13 +1548,23 @@
             document.getElementById('btnSpin').disabled = false;
         }
 
+        let proofPreviewURL = null;
+
+        function revokeProofPreview() {
+            if (proofPreviewURL) {
+                URL.revokeObjectURL(proofPreviewURL);
+                proofPreviewURL = null;
+            }
+        }
+
         function previewProofFile() {
             const f = document.getElementById('proofFile').files[0];
             const prev = document.getElementById('proofPreview');
+            revokeProofPreview();
             if (!f) { prev.style.display = "none"; return; }
-            const reader = new FileReader();
-            reader.onload = (ev) => { prev.src = ev.target.result; prev.style.display = "block"; };
-            reader.readAsDataURL(f);
+            proofPreviewURL = URL.createObjectURL(f);
+            prev.src = proofPreviewURL;
+            prev.style.display = "block";
         }
 
         function showProofSentNote() {
