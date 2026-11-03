@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#111111">
     <title>RICHEN - Exclusive Perfume Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,94 +16,180 @@
         /* --- HEADER & NAVIGATION --- */
         header { 
             background: var(--black); 
-            padding: 15px 5%; 
+            padding: 10px 5% 12px; 
             position: sticky; 
             top: 0; 
             z-index: 1000; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
         }
-        .header-main { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px;
+
+        /* Mobile: baris 1 = [menu] [logo] [keranjang], baris 2 = pencarian */
+        .header-main {
+            display: grid;
+            grid-template-columns: 44px 1fr 44px;
+            grid-template-areas:
+                "burger logo cart"
+                "search search search";
+            align-items: center;
+            gap: 10px 8px;
         }
-        @media (min-width: 992px) {
-            .header-main {
-                flex-direction: row; 
-                align-items: center;
-                justify-content: space-between;
-            }
+        .header-top-row, .header-actions-row { display: contents; }
+
+        .menu-toggle {
+            grid-area: burger;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 22px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .header-top-row {
+        .logo { 
+            grid-area: logo;
+            text-align: center;
+            font-size: 22px; 
+            font-weight: 700; 
+            color: var(--gold); 
+            letter-spacing: 3px; 
+            cursor: pointer; 
+            user-select: none; 
+        }
+
+        .header-icons { 
+            grid-area: cart;
+            display: flex; 
+            justify-content: flex-end;
+            color: var(--white); 
+            font-size: 22px; 
+        }
+        .cart-icon { cursor: pointer; position: relative; padding: 8px; -webkit-tap-highlight-color: transparent; }
+        .cart-count { position: absolute; top: 0; right: -2px; background: #ff4d4d; color: white; font-size: 10px; font-weight: 600; min-width: 18px; height: 18px; line-height: 18px; text-align: center; padding: 0 4px; border-radius: 9px; }
+
+        .search-bar { 
+            grid-area: search;
+            display: flex; 
+            background: var(--white); 
+            border-radius: 24px; 
+            overflow: hidden; 
+            height: 42px;
+        }
+        .search-bar input { flex: 1; border: none; padding: 0 16px; outline: none; width: 100%; font-size: 14px; background: transparent; }
+        .search-bar button { background: var(--gold); border: none; padding: 0 18px; color: white; cursor: pointer; }
+
+        /* Menu mobile = drawer geser dari kiri */
+        .nav-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1001;
+        }
+        .nav-backdrop.show { opacity: 1; visibility: visible; }
+
+        .nav-menu { 
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: min(300px, 82vw);
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(-100%);
+            visibility: hidden;
+            transition: transform 0.3s ease, visibility 0.3s ease;
+            z-index: 1002;
+            overflow-y: auto;
+            box-shadow: 6px 0 24px rgba(0,0,0,0.45);
+            padding-bottom: 20px;
+        }
+        .nav-menu.open { transform: translateX(0); visibility: visible; }
+
+        .nav-drawer-head {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(212,175,55,0.25);
         }
-        @media (min-width: 992px) {
-            .header-top-row {
-                width: auto;
-                gap: 25px;
-            }
+        .nav-drawer-brand { font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: 3px; }
+        .nav-drawer-close {
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: #ddd;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
         }
 
-        .logo { font-size: 26px; font-weight: 700; color: var(--gold); letter-spacing: 2px; cursor: pointer; user-select: none; }
-        
-        .nav-menu { 
-            display: flex; 
-            gap: 8px; 
-            justify-content: center;
-            background: rgba(255,255,255,0.05);
-            padding: 6px 12px;
-            border-radius: 20px;
-            flex-wrap: wrap;
-        }
-        @media (min-width: 992px) {
-            .nav-menu {
-                background: none;
-                padding: 0;
-                gap: 12px;
-            }
-        }
         .nav-link { 
-            color: #bbbbbb; 
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #dddddd; 
             text-decoration: none; 
             font-weight: 600; 
-            font-size: 13px; 
+            font-size: 15px; 
             cursor: pointer; 
-            transition: all 0.3s;
-            padding: 5px 12px;
-            border-radius: 20px;
+            transition: all 0.25s;
+            padding: 14px 18px;
+            margin: 2px 12px;
+            border-radius: 10px;
             white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
         }
+        .nav-link i { width: 20px; text-align: center; font-size: 16px; color: var(--gold); }
         .nav-link:hover, .nav-link.active-page { 
             color: var(--black); 
             background: var(--gold);
         }
+        .nav-link:hover i, .nav-link.active-page i { color: var(--black); }
 
-        .header-actions-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
+        .nav-drawer-foot {
+            margin-top: auto;
+            padding: 18px 20px 0;
+            font-size: 11px;
+            color: #777;
+            text-align: center;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255,255,255,0.08);
         }
+
+        body.menu-open { overflow: hidden; }
+
+        /* Desktop: menu horizontal seperti biasa */
         @media (min-width: 992px) {
-            .header-actions-row {
-                width: auto;
-                max-width: 350px;
-                flex: 1;
-                justify-content: flex-end;
-            }
-        }
+            header { padding: 15px 5%; }
+            .header-main { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 15px; }
+            .header-top-row { display: flex; align-items: center; gap: 25px; width: auto; }
+            .header-actions-row { display: flex; align-items: center; gap: 15px; width: auto; max-width: 350px; flex: 1; justify-content: flex-end; }
 
-        .search-bar { flex: 1; display: flex; background: var(--white); border-radius: 4px; overflow: hidden; }
-        .search-bar input { flex: 1; border: none; padding: 10px 15px; outline: none; width: 100%; font-size: 14px; }
-        .search-bar button { background: var(--gold); border: none; padding: 0 15px; color: white; cursor: pointer; }
-        
-        .header-icons { display: flex; color: var(--white); font-size: 22px; flex-shrink: 0; }
-        .cart-icon { cursor: pointer; position: relative; padding: 5px; }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
+            .menu-toggle, .nav-backdrop, .nav-drawer-head, .nav-drawer-foot { display: none !important; }
+
+            .logo { font-size: 26px; letter-spacing: 2px; text-align: left; }
+            .nav-menu { 
+                position: static; transform: none; visibility: visible; transition: none;
+                width: auto; background: none; flex-direction: row; gap: 12px;
+                overflow: visible; box-shadow: none; padding: 0; z-index: auto;
+            }
+            .nav-link { display: inline-flex; gap: 0; font-size: 13px; color: #bbbbbb; padding: 5px 12px; margin: 0; border-radius: 20px; }
+            .nav-link i { display: none; }
+
+            .search-bar { flex: 1; border-radius: 4px; height: auto; }
+            .search-bar input { padding: 10px 15px; }
+            .search-bar button { padding: 0 15px; }
+            .header-icons { flex-shrink: 0; }
+            .cart-icon { padding: 5px; }
+            .cart-count { top: -5px; right: -5px; }
+        }
 
         /* --- TOMBOL BACK --- */
         .back-to-home-container {
@@ -694,13 +781,22 @@
     <header>
         <div class="header-main">
             <div class="header-top-row">
+                <button class="menu-toggle" id="menuToggle" onclick="toggleMobileMenu()" aria-label="Buka menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="logo" id="logoAdmin">RICHEN</div>
-                <nav class="nav-menu">
-                    <span class="nav-link active-page" onclick="switchPage('home', this)">Home</span>
-                    <span class="nav-link" onclick="switchPage('produk', this)">Produk</span>
-                    <span class="nav-link" onclick="switchPage('verifikasi', this)">Verifikasi</span>
-                    <span class="nav-link" onclick="switchPage('rewards', this)">Richen Rewards</span>
-                    <span class="nav-link" onclick="switchPage('affiliate', this)">Affiliate</span>
+                <div class="nav-backdrop" id="navBackdrop" onclick="closeMobileMenu()"></div>
+                <nav class="nav-menu" id="navMenu">
+                    <div class="nav-drawer-head">
+                        <span class="nav-drawer-brand">RICHEN</span>
+                        <button class="nav-drawer-close" onclick="closeMobileMenu()" aria-label="Tutup menu"><i class="fas fa-times"></i></button>
+                    </div>
+                    <span class="nav-link active-page" onclick="switchPage('home', this)"><i class="fas fa-home"></i> Home</span>
+                    <span class="nav-link" onclick="switchPage('produk', this)"><i class="fas fa-store"></i> Produk</span>
+                    <span class="nav-link" onclick="switchPage('verifikasi', this)"><i class="fas fa-shield-alt"></i> Verifikasi</span>
+                    <span class="nav-link" onclick="switchPage('rewards', this)"><i class="fas fa-gift"></i> Richen Rewards</span>
+                    <span class="nav-link" onclick="switchPage('affiliate', this)"><i class="fas fa-handshake"></i> Affiliate</span>
+                    <div class="nav-drawer-foot">EXCLUSIVE PERFUME MARKETPLACE</div>
                 </nav>
             </div>
             <div class="header-actions-row">
@@ -1359,8 +1455,29 @@
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
 
+        /* --- MOBILE MENU (DRAWER) --- */
+        function openMobileMenu() {
+            document.getElementById('navMenu').classList.add('open');
+            document.getElementById('navBackdrop').classList.add('show');
+            document.body.classList.add('menu-open');
+            document.getElementById('menuToggle').setAttribute('aria-expanded', 'true');
+        }
+        function closeMobileMenu() {
+            document.getElementById('navMenu').classList.remove('open');
+            document.getElementById('navBackdrop').classList.remove('show');
+            document.body.classList.remove('menu-open');
+            document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
+        }
+        function toggleMobileMenu() {
+            if (document.getElementById('navMenu').classList.contains('open')) closeMobileMenu();
+            else openMobileMenu();
+        }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileMenu(); });
+        window.addEventListener('resize', () => { if (window.innerWidth >= 992) closeMobileMenu(); });
+
         /* --- NAVIGATION SYSTEM --- */
         function switchPage(pageId, element) {
+            closeMobileMenu();
             document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active-section'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-page'));
             
