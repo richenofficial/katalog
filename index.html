@@ -697,7 +697,7 @@
         .admin-tab-btn.active { background: var(--gold); color: #fff; }
         .admin-tab-content { display: none; }
         .admin-tab-content.active { display: block; }
-        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; margin-bottom: 25px; }
+        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 25px; }
         .admin-form input, .admin-form select, .admin-form textarea { padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; width: 100%; }
         .admin-section-box { background: #fdfdfd; padding: 15px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 10px; }
         .admin-section-box h4 { margin-bottom: 10px; color: #333; font-size: 14px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
@@ -708,29 +708,6 @@
         .admin-table-container { width: 100%; overflow-x: auto; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 550px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 13px; }
-
-        /* --- ADMIN: RESPONSIF DI HP --- */
-        #admin-panel input, #admin-panel select, #admin-panel textarea { max-width: 100%; box-sizing: border-box; }
-        #admin-panel select { width: 100%; }
-        .admin-head-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
-        .admin-head-row h2 { font-size: 20px; line-height: 1.3; }
-        .admin-head-row button { flex-shrink: 0; white-space: nowrap; }
-        .admin-inline-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-        .admin-inline-row input { flex: 1 1 220px; min-width: 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .admin-inline-row button { flex: 0 0 auto; background: var(--gold); color: #fff; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; }
-        table.table-compact { min-width: 0; }
-        table.table-compact th, table.table-compact td { word-break: break-word; }
-        @media (max-width: 600px) {
-            #admin-panel { margin: 20px 3%; padding: 16px; }
-            .admin-nav-tabs { gap: 8px; }
-            .admin-tab-btn { padding: 8px 12px; font-size: 12.5px; }
-            .admin-table-container { -webkit-overflow-scrolling: touch; }
-            .admin-table-container:not(.no-hint)::before { content: "\2190  geser tabel ke samping  \2192"; display: block; font-size: 11px; color: #999; text-align: center; margin-bottom: 6px; }
-            table { min-width: 480px; }
-            th, td { padding: 9px 8px; font-size: 12px; }
-            .bottle-input-item input { flex: 1 1 100% !important; }
-            .admin-inline-row button { flex: 1 1 100%; }
-        }
 
         /* --- MODAL VARIANT SELECTION --- */
         .variant-modal { 
@@ -785,8 +762,8 @@
         .box-price-text { display: none; }
 
         /* --- CART SIDEBAR --- */
-        #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; max-width: 100vw; height: 100%; background: #fff; box-shadow: none; visibility: hidden; z-index: 2000; transition: right 0.4s, box-shadow 0.4s, visibility 0.4s; padding: 25px; display: flex; flex-direction: column; box-sizing: border-box; }
-        #cart-modal.active { right: 0; visibility: visible; box-shadow: -10px 0 30px rgba(0,0,0,0.2); }
+        #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
+        #cart-modal.active { right: 0; }
 
         /* --- POPUP PANDUAN LAYANAN --- */
         .guide-modal {
@@ -951,7 +928,7 @@
                 </button>
                 
                 <div class="sample-codes-hint">
-                    Coba ketik kode contoh ini: <span onclick="quickVerifyFill('RCN-LUX-2026')">RCN-LUX-2026</span> atau <span onclick="quickVerifyFill('RICHEN-ORIGINAL-99')">RICHEN-ORIGINAL-99</span>
+                    Coba ketik kode unik yang tertera dikemasan
                 </div>
 
                 <!-- Hasil Sertifikat Verifikasi -->
@@ -1010,8 +987,8 @@
         <div class="back-to-home-container"><button class="btn-back-home" onclick="switchPage('home')"><i class="fas fa-arrow-left"></i> Kembali ke Home</button></div>
         <div class="rewards-page-container">
             <div class="rewards-header">
-                <h2>Richen Lucky Spin Rewards</h2>
-                <p>Posting ulasan positif di marketplace, kirim buktinya ke WhatsApp admin, lalu putar roda hadiah impian!</p>
+                <h2>Richen Rewards</h2>
+                <p>Posting ulasan positif di marketplace, kirim buktinya ke WhatsApp admin, lalu mainkan richen rewards!</p>
             </div>
 
             <!-- STEP 1: FORM ULASAN POSITIF -->
@@ -1077,7 +1054,7 @@
                 </div>
                 <div class="proof-lock-note"><i class="fas fa-lock"></i> Selesaikan langkah 1 terlebih dahulu untuk membuka langkah ini.</div>
                 <p style="font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px;">
-                    Setelah ulasan Anda tayang di marketplace, ambil <b>screenshot</b>-nya, pilih fotonya di bawah, lalu kirim ke WhatsApp admin. <b>Spin Wheel baru terbuka setelah bukti dikirim ke WhatsApp.</b>
+                    Setelah ulasan Anda tayang di marketplace, ambil <b>screenshot</b>-nya, pilih fotonya di bawah, lalu kirim ke WhatsApp admin. <b>richen rewards baru terbuka setelah bukti dikirim ke WhatsApp.</b>
                 </p>
                 <div class="reward-form-group">
                     <label>Pilih Screenshot Ulasan di Marketplace:</label>
@@ -1090,12 +1067,12 @@
                 <div class="proof-status-note" id="proofStatusNote"></div>
             </div>
 
-            <!-- STEP 3: SPIN WHEEL (TERKUNCI / TERBUKA) -->
+            <!-- STEP 3: RICHEN REWARDS (TERKUNCI / TERBUKA) -->
             <div class="wheel-section-wrapper">
                 <div class="wheel-overlay-locked" id="wheelOverlay">
                     <i class="fas fa-lock"></i>
-                    <h3>Fitur Spin Wheel Terkunci</h3>
-                    <p>Posting ulasan positif di marketplace, lalu kirim screenshot buktinya ke WhatsApp admin (langkah 1 &amp; 2 di atas) untuk membuka akses spin roda keberuntungan.</p>
+                    <h3>Fitur Rewards Terkunci</h3>
+                    <p>Posting ulasan positif di marketplace, lalu kirim screenshot buktinya ke WhatsApp admin (langkah 1 &amp; 2 di atas) untuk membuka akses rewards.</p>
                 </div>
 
                 <h3 style="font-size: 22px; color: var(--black); font-weight: 700; margin-bottom: 5px;">Roda Keberuntungan Hadiah RICHEN</h3>
@@ -1160,7 +1137,7 @@
                 <h2>Program Affiliate RICHEN</h2>
                 <p>Raih penghasilan tambahan jutaan rupiah dengan membagikan rekomendasi aroma wewangian premium RICHEN ke teman, keluarga, dan media sosial Anda!</p>
                 <div style="display: inline-flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
-                    <span style="background: rgba(212,175,55,0.2); border: 1px solid var(--gold); padding: 6px 16px; border-radius: 20px; font-size: 13px; color: var(--gold);"><i class="fas fa-percentage"></i> Komisi Hingga 20%</span>
+                    <span style="background: rgba(212,175,55,0.2); border: 1px solid var(--gold); padding: 6px 16px; border-radius: 20px; font-size: 13px; color: var(--gold);"><i class="fas fa-percentage"></i> Komisi 8%-10%</span>
                     <span style="background: rgba(212,175,55,0.2); border: 1px solid var(--gold); padding: 6px 16px; border-radius: 20px; font-size: 13px; color: var(--gold);"><i class="fas fa-wallet"></i> Pencairan Tiap Minggu</span>
                 </div>
             </div>
@@ -1174,12 +1151,12 @@
                 <div class="aff-benefit-card">
                     <i class="fas fa-gift"></i>
                     <h4>Sample Produk Gratis</h4>
-                    <p>Mitra affiliate aktif berkesempatan memperoleh sampel rilisan varian wewangian terbaru.</p>
+                    <p>Afiiliator aktif berkesempatan memperoleh sampel secara gratis.</p>
                 </div>
                 <div class="aff-benefit-card">
                     <i class="fas fa-bullhorn"></i>
-                    <h4>Materi Promosi Siap Pakai</h4>
-                    <p>Kami menyediakan aset konten foto & video estetis beresolusi tinggi untuk promosi Anda.</p>
+                    <h4>Bonus Tambahan</h4>
+                    <p>Kami menyediakan hadiah tambahan untuk top affiliator dengan tingkat penjualan terbanyak.</p>
                 </div>
             </div>
 
@@ -1260,7 +1237,7 @@
 
     <!-- ADMIN PANEL DENGAN DASHBOARD ADVANCED -->
     <div id="admin-panel">
-        <div class="admin-head-row">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 id="admHeader">Panel Kendali Admin RICHEN</h2>
             <button onclick="closeAdmin()" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">[Tutup Admin]</button>
         </div>
@@ -1362,7 +1339,7 @@
             
             <div class="admin-section-box" style="margin-bottom:20px; border: 2px solid var(--gold); background: #fffdf5;">
                 <h4 style="color:var(--black); font-size:15px;"><i class="fas fa-crosshairs" style="color:red;"></i> Kontrol Target Panah Berhenti (Spin Target Angle Control)</h4>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap:15px; margin-top:10px;">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin-top:10px;">
                     <div>
                         <label style="font-size:12px; font-weight:bold;">Mode Hasil Spin:</label>
                         <select id="admSpinMode" onchange="toggleSpinTargetSelect()">
@@ -1382,7 +1359,7 @@
                 </div>
             </div>
 
-            <div class="admin-form" style="grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));">
+            <div class="admin-form" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                 <div class="admin-section-box">
                     <h4>Sektor 1</h4>
                     <label style="font-size:12px;">Nama Hadiah:</label>
@@ -1442,12 +1419,12 @@
         <!-- TAB 4: KELOLA KODE VERIFIKASI KEASLIAN -->
         <div id="tab-verifikasi" class="admin-tab-content">
             <h4 style="margin-bottom:15px;">Tambah / Kelola Serial Code / Batch Number</h4>
-            <div class="admin-inline-row">
-                <input type="text" id="newVerifyCode" placeholder="Masukkan Kode Unik Baru (Contoh: RCN-2026-X8)">
-                <button onclick="addVerificationCode()">Tambah Kode</button>
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <input type="text" id="newVerifyCode" placeholder="Masukkan Kode Unik Baru (Contoh: RCN-2026-X8)" style="padding:10px; flex:1; border:1px solid #ccc; border-radius:4px;">
+                <button onclick="addVerificationCode()" style="background:var(--gold); color:#fff; border:none; padding:10px 20px; font-weight:bold; border-radius:4px; cursor:pointer;">Tambah Kode</button>
             </div>
-            <div class="admin-table-container no-hint">
-                <table class="table-compact">
+            <div class="admin-table-container">
+                <table>
                     <thead>
                         <tr>
                             <th>Serial / Batch Code</th>
