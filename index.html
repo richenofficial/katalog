@@ -765,6 +765,53 @@
         #cart-modal { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #fff; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 2000; transition: 0.4s; padding: 25px; display: flex; flex-direction: column; }
         #cart-modal.active { right: 0; }
 
+        /* --- POPUP PANDUAN LAYANAN --- */
+        .guide-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 3500;
+            display: none; align-items: flex-end; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .guide-modal.active { display: flex; }
+        .guide-sheet {
+            background: #fff; width: 100%; max-width: 520px; max-height: 88vh;
+            border-radius: 20px 20px 0 0; display: flex; flex-direction: column;
+            border-top: 3px solid var(--gold);
+            animation: guideSlideUp 0.3s ease;
+        }
+        @keyframes guideSlideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .guide-head { display: flex; align-items: center; gap: 14px; padding: 20px 20px 14px; border-bottom: 1px solid #eee; }
+        .guide-head-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--black); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .guide-head-title { flex: 1; font-size: 18px; font-weight: 700; color: var(--black); line-height: 1.3; }
+        .guide-close { background: #f1f1f1; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 15px; color: #555; cursor: pointer; flex-shrink: 0; }
+        .guide-body { padding: 18px 20px; overflow-y: auto; }
+        .guide-intro { font-size: 13.5px; color: #666; line-height: 1.6; margin-bottom: 16px; }
+        .guide-steps { list-style: none; counter-reset: gstep; }
+        .guide-steps li { counter-increment: gstep; display: flex; gap: 12px; font-size: 14px; color: #333; line-height: 1.6; padding: 10px 0; }
+        .guide-steps li::before { content: counter(gstep); flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--black); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+        .guide-links { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
+        .guide-link { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 1px solid #eee; border-radius: 12px; text-decoration: none; color: #222; transition: border-color 0.2s, box-shadow 0.2s; -webkit-tap-highlight-color: transparent; }
+        .guide-link:hover { border-color: var(--gold); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+        .guide-link-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; flex-shrink: 0; }
+        .guide-link-icon.ig { background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888); }
+        .guide-link-icon.tt { background: #111; }
+        .guide-link-icon.wa { background: #25D366; }
+        .guide-link-text { flex: 1; display: flex; flex-direction: column; line-height: 1.35; min-width: 0; }
+        .guide-link-text b { font-size: 14.5px; font-weight: 600; }
+        .guide-link-text small { font-size: 12.5px; color: #777; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .guide-link-arrow { color: #bbb; font-size: 13px; }
+        .guide-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+        .guide-chip { background: #f7f3e3; border: 1px solid var(--gold); color: #7a6410; font-weight: 600; font-size: 12.5px; padding: 6px 14px; border-radius: 20px; }
+        .guide-note { margin-top: 12px; background: #fafafa; border-left: 3px solid var(--gold); padding: 10px 14px; font-size: 12.5px; color: #666; line-height: 1.6; border-radius: 0 8px 8px 0; }
+        .guide-foot { padding: 14px 20px 20px; border-top: 1px solid #eee; }
+        .guide-cta { width: 100%; background: var(--black); color: var(--gold); border: none; padding: 14px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; }
+        .guide-cta:hover { background: #222; }
+        @media (min-width: 600px) {
+            .guide-modal { align-items: center; padding: 20px; }
+            .guide-sheet { border-radius: 16px; }
+        }
+        body.modal-lock { overflow: hidden; }
+
         /* --- AREA FOOTER --- */
         footer { background: var(--black); color: white; padding: 50px 5% 20px; margin-top: 60px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
@@ -827,21 +874,21 @@
         <div class="categories-grid-container">
             <div class="categories-title">Layanan & Fitur Eksklusif RICHEN</div>
             <div class="categories-grid">
-                <div class="cat-grid-card" onclick="switchPage('produk')">
-                    <div class="cat-avatar-container"><i class="fas fa-box-open"></i></div>
-                    <span>Produk</span>
+                <div class="cat-grid-card" onclick="openServiceGuide('checkout')">
+                    <div class="cat-avatar-container"><i class="fas fa-shopping-bag"></i></div>
+                    <span>Cara Checkout</span>
                 </div>
-                <div class="cat-grid-card" onclick="switchPage('verifikasi')">
+                <div class="cat-grid-card" onclick="openServiceGuide('keaslian')">
                     <div class="cat-avatar-container"><i class="fas fa-shield-alt"></i></div>
-                    <span>Verifikasi Keaslian Produk</span>
+                    <span>Cara Cek Keaslian</span>
                 </div>
-                <div class="cat-grid-card" onclick="switchPage('rewards')">
+                <div class="cat-grid-card" onclick="openServiceGuide('rewards')">
                     <div class="cat-avatar-container"><i class="fas fa-gift"></i></div>
-                    <span>Richen Rewards</span>
+                    <span>Cara Main Rewards</span>
                 </div>
-                <div class="cat-grid-card" onclick="switchPage('affiliate')">
-                    <div class="cat-avatar-container"><i class="fas fa-user-plus"></i></div>
-                    <span>Daftar Affiliate Richen</span>
+                <div class="cat-grid-card" onclick="openServiceGuide('pengiriman')">
+                    <div class="cat-avatar-container"><i class="fas fa-shipping-fast"></i></div>
+                    <span>Jasa Pengiriman</span>
                 </div>
             </div>
         </div>
@@ -1391,6 +1438,27 @@
         </div>
     </div>
 
+    <!-- POPUP PANDUAN LAYANAN -->
+    <div class="guide-modal" id="guideModal" onclick="if(event.target === this) closeServiceGuide()">
+        <div class="guide-sheet">
+            <div class="guide-head">
+                <div class="guide-head-icon"><i class="fas fa-shopping-bag" id="guideIcon"></i></div>
+                <div class="guide-head-title" id="guideTitle"></div>
+                <button class="guide-close" onclick="closeServiceGuide()" aria-label="Tutup"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="guide-body">
+                <div class="guide-intro" id="guideIntro"></div>
+                <div class="guide-chips" id="guideChips"></div>
+                <div class="guide-links" id="guideLinks"></div>
+                <ol class="guide-steps" id="guideSteps"></ol>
+                <div class="guide-note" id="guideNote"></div>
+            </div>
+            <div class="guide-foot">
+                <button class="guide-cta" id="guideCta"></button>
+            </div>
+        </div>
+    </div>
+
     <!-- CART MODAL -->
     <div id="cart-modal">
         <h3>Keranjang Belanja</h3>
@@ -1417,11 +1485,10 @@
             </div>
             <div>
                 <h4>Layanan</h4>
-                <p onclick="switchPage('home')">Home</p>
-                <p onclick="switchPage('produk')">Katalog Produk</p>
-                <p onclick="switchPage('verifikasi')">Cek Keaslian</p>
-                <p onclick="switchPage('rewards')">Spin Rewards</p>
-                <p onclick="switchPage('affiliate')">Mitra Affiliate</p>
+                <p onclick="openServiceGuide('sosmed')">Sosial Media</p>
+                <p onclick="openServiceGuide('checkout')">Cara Checkout</p>
+                <p onclick="openServiceGuide('keaslian')">Cara Cek Keaslian</p>
+                <p onclick="openServiceGuide('rewards')">Cara Main Rewards</p>
             </div>
         </div>
         <div style="text-align:center; margin-top:40px; font-size:12px; color:#777; border-top:1px solid #333; padding-top:20px;">
@@ -1454,6 +1521,118 @@
         let isSlidingBoxSelected = false;
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
+
+        /* --- PANDUAN LAYANAN (SOSIAL MEDIA, CHECKOUT, KEASLIAN, REWARDS, PENGIRIMAN) --- */
+        // Daftar kurir bisa Anda ubah sesuai kurir yang benar-benar dipakai RICHEN
+        const SHIPPING_COURIERS = ["JNE", "J&T Express", "SiCepat", "AnterAja"];
+
+        const SERVICE_GUIDES = {
+            sosmed: {
+                icon: "fa-share-alt",
+                title: "Sosial Media RICHEN",
+                intro: "Ikuti kami untuk info produk terbaru, promo, dan tips parfum. Pertanyaan dan pemesanan juga bisa lewat WhatsApp.",
+                links: [
+                    { name: "Instagram", handle: "@richen_official", url: "https://www.instagram.com/richen_official?igsh=MmE3b3R6NGYyMGZ4", icon: "fab fa-instagram", cls: "ig" },
+                    { name: "TikTok", handle: "@richen.indonesia", url: "https://www.tiktok.com/@richen.indonesia?_r=1&_t=ZS-96Ke6N0RyYK", icon: "fab fa-tiktok", cls: "tt" },
+                    { name: "WhatsApp Admin", handle: "Chat langsung dengan admin RICHEN", url: "https://wa.me/6283814559667", icon: "fab fa-whatsapp", cls: "wa" }
+                ],
+                steps: [],
+                cta: { label: "Tutup" }
+            },
+            checkout: {
+                icon: "fa-shopping-bag",
+                title: "Cara Checkout",
+                intro: "Belanja parfum RICHEN mudah, pesanan Anda dikirim langsung ke WhatsApp admin.",
+                steps: [
+                    "Buka menu <b>Produk</b>, pilih parfum yang Anda suka.",
+                    "Tentukan <b>aroma, botol, dan kemasan</b>, lalu masukkan ke keranjang.",
+                    "Buka ikon <b>keranjang</b> di pojok kanan atas, periksa pesanan dan total belanja.",
+                    "Tekan tombol <b>Checkout ke WhatsApp</b>. Rincian pesanan Anda akan terisi otomatis di chat.",
+                    "Kirim pesan ke admin RICHEN, lalu ikuti arahan pembayaran dari admin."
+                ],
+                note: "Pastikan jumlah dan pilihan varian sudah benar sebelum checkout.",
+                cta: { label: "Mulai Belanja", page: "produk" }
+            },
+            keaslian: {
+                icon: "fa-shield-alt",
+                title: "Cara Cek Keaslian Produk",
+                intro: "Pastikan parfum Anda 100% original dengan kode unik yang ada pada kemasan.",
+                steps: [
+                    "Cari <b>kode unik / serial batch</b> pada kardus atau botol parfum Anda.",
+                    "Buka menu <b>Verifikasi</b>.",
+                    "Ketik kode tersebut pada kolom yang tersedia (contoh format: <b>RCN-8892-X1</b>).",
+                    "Tekan tombol <b>Cek Keaslian Sekarang</b>.",
+                    "Jika kode valid, akan muncul <b>Certificate of Authenticity</b> berisi kode produk, status garansi, dan tanggal verifikasi."
+                ],
+                note: "Kode tidak ditemukan? Periksa kembali penulisannya, atau hubungi admin RICHEN melalui WhatsApp.",
+                cta: { label: "Cek Keaslian Sekarang", page: "verifikasi" }
+            },
+            rewards: {
+                icon: "fa-gift",
+                title: "Cara Main Richen Rewards",
+                intro: "Beri ulasan positif, kirim buktinya, lalu putar roda hadiah. Ada 3 langkah mudah:",
+                steps: [
+                    "Buka menu <b>Richen Rewards</b>, beri bintang, isi nama, nomor WhatsApp, dan ulasan positif, lalu pilih platform tempat Anda membeli.",
+                    "Tekan <b>Salin Ulasan & Buka Marketplace</b>. Ulasan tersalin otomatis, tinggal <b>tempel (paste)</b> di kolom ulasan marketplace lalu kirim.",
+                    "Ambil <b>screenshot</b> ulasan Anda yang sudah tayang di marketplace.",
+                    "Kembali ke halaman Rewards, pilih screenshot di Langkah 2, lalu tekan <b>Kirim Bukti ke WhatsApp</b> dan lampirkan fotonya di chat admin.",
+                    "<b>Spin Wheel terbuka!</b> Putar roda dan klaim hadiah Anda melalui WhatsApp admin."
+                ],
+                note: "Spin Wheel baru bisa dimainkan setelah bukti ulasan dikirim ke WhatsApp.",
+                cta: { label: "Main Rewards Sekarang", page: "rewards" }
+            },
+            pengiriman: {
+                icon: "fa-shipping-fast",
+                title: "Jasa Pengiriman",
+                intro: "Pesanan RICHEN dikirim menggunakan jasa ekspedisi terpercaya:",
+                chips: SHIPPING_COURIERS,
+                steps: [
+                    "Lakukan <b>checkout ke WhatsApp</b> dari keranjang Anda.",
+                    "Sampaikan <b>alamat lengkap</b> dan kurir pilihan Anda kepada admin.",
+                    "Admin akan menginformasikan <b>ongkos kirim</b> dan total pembayaran.",
+                    "Setelah pembayaran dikonfirmasi, pesanan dikemas dan dikirim, lalu <b>nomor resi</b> diberikan agar Anda bisa melacak paket."
+                ],
+                note: "Pastikan alamat dan nomor telepon penerima sudah benar agar paket sampai dengan lancar.",
+                cta: { label: "Mulai Belanja", page: "produk" }
+            }
+        };
+
+        function openServiceGuide(key) {
+            const g = SERVICE_GUIDES[key];
+            if (!g) return;
+            document.getElementById('guideIcon').className = "fas " + g.icon;
+            document.getElementById('guideTitle').innerText = g.title;
+            document.getElementById('guideIntro').innerText = g.intro;
+
+            const chips = document.getElementById('guideChips');
+            chips.innerHTML = (g.chips || []).map(c => `<span class="guide-chip">${c}</span>`).join("");
+            chips.style.display = (g.chips && g.chips.length) ? "flex" : "none";
+
+            const links = document.getElementById('guideLinks');
+            links.innerHTML = (g.links || []).map(l => `<a class="guide-link" href="${l.url}" target="_blank" rel="noopener"><span class="guide-link-icon ${l.cls}"><i class="${l.icon}"></i></span><span class="guide-link-text"><b>${l.name}</b><small>${l.handle}</small></span><i class="fas fa-chevron-right guide-link-arrow"></i></a>`).join("");
+            links.style.display = (g.links && g.links.length) ? "flex" : "none";
+
+            const stepsEl = document.getElementById('guideSteps');
+            stepsEl.innerHTML = (g.steps || []).map(st => `<li><span>${st}</span></li>`).join("");
+            stepsEl.style.display = (g.steps && g.steps.length) ? "" : "none";
+
+            const note = document.getElementById('guideNote');
+            note.innerText = g.note || "";
+            note.style.display = g.note ? "block" : "none";
+
+            const cta = document.getElementById('guideCta');
+            cta.innerText = g.cta.label;
+            cta.onclick = () => { closeServiceGuide(); if (g.cta.page) switchPage(g.cta.page); };
+
+            document.getElementById('guideModal').classList.add('active');
+            document.body.classList.add('modal-lock');
+        }
+
+        function closeServiceGuide() {
+            document.getElementById('guideModal').classList.remove('active');
+            document.body.classList.remove('modal-lock');
+        }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeServiceGuide(); });
 
         /* --- MOBILE MENU (DRAWER) --- */
         function openMobileMenu() {
