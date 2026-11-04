@@ -874,21 +874,21 @@
         <div class="categories-grid-container">
             <div class="categories-title">Layanan & Fitur Eksklusif RICHEN</div>
             <div class="categories-grid">
-                <div class="cat-grid-card" onclick="openServiceGuide('checkout')">
-                    <div class="cat-avatar-container"><i class="fas fa-shopping-bag"></i></div>
-                    <span>Cara Checkout</span>
+                <div class="cat-grid-card" onclick="switchPage('produk')">
+                    <div class="cat-avatar-container"><i class="fas fa-store"></i></div>
+                    <span>Produk</span>
                 </div>
-                <div class="cat-grid-card" onclick="openServiceGuide('keaslian')">
+                <div class="cat-grid-card" onclick="switchPage('verifikasi')">
                     <div class="cat-avatar-container"><i class="fas fa-shield-alt"></i></div>
-                    <span>Cara Cek Keaslian</span>
+                    <span>Verifikasi Keaslian</span>
                 </div>
-                <div class="cat-grid-card" onclick="openServiceGuide('rewards')">
+                <div class="cat-grid-card" onclick="switchPage('rewards')">
                     <div class="cat-avatar-container"><i class="fas fa-gift"></i></div>
-                    <span>Cara Main Rewards</span>
+                    <span>Richen Rewards</span>
                 </div>
-                <div class="cat-grid-card" onclick="openServiceGuide('pengiriman')">
-                    <div class="cat-avatar-container"><i class="fas fa-shipping-fast"></i></div>
-                    <span>Jasa Pengiriman</span>
+                <div class="cat-grid-card" onclick="switchPage('affiliate')">
+                    <div class="cat-avatar-container"><i class="fas fa-handshake"></i></div>
+                    <span>Daftar Affiliate</span>
                 </div>
             </div>
         </div>
@@ -1522,10 +1522,7 @@
         let currentActiveProductId = "";
         let variantTargetAction = ""; 
 
-        /* --- PANDUAN LAYANAN (SOSIAL MEDIA, CHECKOUT, KEASLIAN, REWARDS, PENGIRIMAN) --- */
-        // Daftar kurir bisa Anda ubah sesuai kurir yang benar-benar dipakai RICHEN
-        const SHIPPING_COURIERS = ["JNE", "J&T Express", "SiCepat", "AnterAja"];
-
+        /* --- PANDUAN LAYANAN (SOSIAL MEDIA, CHECKOUT, KEASLIAN, REWARDS) --- */
         const SERVICE_GUIDES = {
             sosmed: {
                 icon: "fa-share-alt",
@@ -1580,20 +1577,6 @@
                 ],
                 note: "Spin Wheel baru bisa dimainkan setelah bukti ulasan dikirim ke WhatsApp.",
                 cta: { label: "Main Rewards Sekarang", page: "rewards" }
-            },
-            pengiriman: {
-                icon: "fa-shipping-fast",
-                title: "Jasa Pengiriman",
-                intro: "Pesanan RICHEN dikirim menggunakan jasa ekspedisi terpercaya:",
-                chips: SHIPPING_COURIERS,
-                steps: [
-                    "Lakukan <b>checkout ke WhatsApp</b> dari keranjang Anda.",
-                    "Sampaikan <b>alamat lengkap</b> dan kurir pilihan Anda kepada admin.",
-                    "Admin akan menginformasikan <b>ongkos kirim</b> dan total pembayaran.",
-                    "Setelah pembayaran dikonfirmasi, pesanan dikemas dan dikirim, lalu <b>nomor resi</b> diberikan agar Anda bisa melacak paket."
-                ],
-                note: "Pastikan alamat dan nomor telepon penerima sudah benar agar paket sampai dengan lancar.",
-                cta: { label: "Mulai Belanja", page: "produk" }
             }
         };
 
