@@ -1119,7 +1119,7 @@
                 Mohon maaf, Spin Rewards hanya dapat dimainkan jika Anda memberikan ulasan positif bintang 5. Apabila ada kendala produk (pecah, kurang, atau tidak sesuai), tim admin siap membantu menyelesaikan masalah Anda sampai puas.
             </div>
             <div class="neg-btn-group">
-                <button class="btn-neg-fix" onclick="redirectToMarketplaceReview()">
+                <button class="btn-neg-fix" onclick="fixReviewForm()">
                     <i class="fas fa-edit" style="margin-right: 6px;"></i> Perbaiki & Beri Ulasan Positif
                 </button>
                 <button class="btn-neg-wa" onclick="contactAdminComplaintWA()">
@@ -1995,14 +1995,22 @@
             document.getElementById('negativeReviewModal').style.display = "none";
         }
 
-        function redirectToMarketplaceReview() {
+        // "Perbaiki Ulasan": tutup peringatan dan kembali ke formulir agar ulasan bisa diedit
+        function fixReviewForm() {
             closeNegativeWarningModal();
-            const platform = document.getElementById('revPlatform').value;
-            let targetURL = "https://shopee.co.id/";
-            if (platform === "TikTok Shop") targetURL = "https://www.tiktok.com/@richen.indonesia";
-            else if (platform === "Tokopedia") targetURL = "https://www.tokopedia.com/";
-            
-            window.open(targetURL, '_blank');
+            const form = document.getElementById('rewardReviewForm');
+            if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Bintang sudah baik -> arahkan kursor ke kolom ulasan agar teksnya bisa diperbaiki
+            if (currentRating >= 4) {
+                setTimeout(() => {
+                    const ta = document.getElementById('revComment');
+                    if (ta) {
+                        ta.focus();
+                        ta.setSelectionRange(ta.value.length, ta.value.length);
+                    }
+                }, 450);
+            }
         }
 
         function contactAdminComplaintWA() {
